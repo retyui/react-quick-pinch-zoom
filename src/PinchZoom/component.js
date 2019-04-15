@@ -97,12 +97,12 @@ class PinchZoom extends Component<Props> {
     this._lastDragPosition = touch;
   }
 
-  _handleDragEnd(event: void) {
+  _handleDragEnd() {
     this.props.onDragEnd();
     this._end();
   }
 
-  _handleZoomStart(event: void) {
+  _handleZoomStart() {
     this.props.onZoomStart();
     this._stopAnimation();
     this._lastScale = 1;
@@ -128,7 +128,7 @@ class PinchZoom extends Component<Props> {
     this._lastZoomCenter = touchCenter;
   }
 
-  _handleZoomEnd(event: void) {
+  _handleZoomEnd() {
     this.props.onZoomEnd();
     this._end();
   }
