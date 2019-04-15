@@ -8,7 +8,11 @@ Based on this module [manuelstofer/pinchzoom](https://github.com/manuelstofer/pi
 
 - 🔮 Simple. Easy to use;
 - 🍎 Works on both iOS and Android and with MouseEvents;
-- ⚡ Fast, 60FPS on mobile devices
+- ⚡ Fast, 60 FPS on mobile devices
+
+## Links
+
+- [Demo](https://react-quick-pinch-zoom.netlify.com/)
 
 ## Install
 
@@ -21,18 +25,16 @@ yarn add react-quick-pinch-zoom
 ```jsx
 import React, { Component, createRef } from "react";
 
-import QuickPinchZoom from "react-quick-pinch-zoom";
+import QuickPinchZoom, { make3dTransformValue } from "react-quick-pinch-zoom";
 
 class App extends Component {
   imgRef = createRef();
 
   onUpdate = ({ x, y, scale }) => {
     const { current: img } = this.imgRef;
+    const value = make3dTransformValue({ x, y, scale });
 
-    img.style.setProperty(
-      "transform",
-      `scale3d(${scale}, ${scale}, 1) translate3d(${x}px, ${y}px, 0)`
-    );
+    img.style.setProperty("transform", value);
   };
 
   render() {

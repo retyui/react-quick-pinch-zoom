@@ -1,26 +1,26 @@
 {
   "name": "react-quick-pinch-zoom",
-  "version": "1.0.0",
-  "description": "A react component that providing multi-touch gestures for zooming and dragging on any DOM element.",
-  "author": "David NRB",
-  "license": "MIT",
-  "repository": "retyui/react-quick-pinch-zoom",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
-  "jsnext:main": "dist/index.es.js",
+  "dependencies": {
+    "classnames": "^2.0.0"
+  },
+  "peerDependencies": {
+    "prop-types": ">=15.0.0",
+    "react": ">=16.4.0",
+    "react-dom": ">=16.4.0"
+  },
   "scripts": {
+    "size": "size-limit",
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "build": "rollup -c",
+    "postbuild": "yarn run size",
     "start": "rollup -c -w",
     "prepublishOnly": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"
-  },
-  "peerDependencies": {
-    "prop-types": "^15.0.0",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -57,14 +57,16 @@
     "rollup-plugin-node-resolve": "^3.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-postcss": "^1.6.2",
-    "rollup-plugin-url": "^1.4.0"
+    "rollup-plugin-url": "^1.4.0",
+    "size-limit": "^1.0.1"
   },
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "classnames": "^2.0.0"
-  },
+  "description": "A react component that providing multi-touch gestures for zooming and dragging on any DOM element.",
+  "author": "David Nrb <offantik@gmail.com>",
+  "license": "MIT",
+  "repository": "retyui/react-quick-pinch-zoom",
   "keywords": [
     "drag",
     "gesture",

@@ -1,7 +1,6 @@
 {
   "name": "react-quick-pinch-zoom-example",
-  "homepage": "https://retyui.github.io/react-quick-pinch-zoom",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "private": true,
   "dependencies": {

@@ -1,9 +1,1 @@
-.pinchZoomContainer {
-  overflow: hidden;
-  touch-action: none;
-}
-
-.pinchZoomElement {
-  transform-origin: 0 0;
-  will-change: transform;
-}
+.pinchZoomContainer{overflow:hidden;touch-action:none}.pinchZoomElement{transform-origin:0 0}

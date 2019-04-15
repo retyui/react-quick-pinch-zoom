@@ -2,9 +2,7 @@
 
 import type { Element } from "react";
 
-export type LikeTouchEvent = {
-  touches: TouchList
-};
+export type UpdateAction = { x: number, y: number, scale: number };
 
 export type Props = $ReadOnly<{|
   shouldInterceptWheel: (e: WheelEvent) => boolean,
@@ -16,7 +14,7 @@ export type Props = $ReadOnly<{|
   enabled: boolean,
   horizontalPadding: number,
   lockDragAxis: boolean,
-  onUpdate: ({ x: number, y: number, scale: number }) => void,
+  onUpdate: UpdateAction => void,
   maxZoom: number,
   minZoom: number,
   onDoubleTap: () => void,

@@ -13,7 +13,6 @@ import {
   isTouch,
   max,
   min,
-  noup,
   shouldInterceptWheel,
   swing
 } from "../utils";
@@ -22,11 +21,15 @@ import styles from "../styles.css";
 import type { Interaction, Point } from "../types";
 import type { Props } from "./types";
 
+export const noup = () => {};
 const zeroPoint = { x: 0, y: 0 };
+const _window = window;
 const {
+  setTimeout,
   ResizeObserver,
+  requestAnimationFrame,
   document: { documentElement: _html, body: _body }
-} = window;
+} = _window;
 
 class PinchZoom extends Component<Props> {
   static defaultProps = {
@@ -57,7 +60,6 @@ class PinchZoom extends Component<Props> {
   };
 
   _containerObserver: ?ResizeObserver = null;
-  _elRect: ClientRect;
   _fingers: number = 0;
   _firstMove: boolean = true;
   _hasInteraction: boolean;
@@ -73,7 +75,6 @@ class PinchZoom extends Component<Props> {
   _listenMouseMove: boolean = false;
   _nthZoom: number = 0;
   _offset: Point = { ...zeroPoint };
-  _rect: ClientRect;
   _startTouches = null;
   _updatePlaned: boolean = false;
   _wheelTimeOut: ?TimeoutID = null;
@@ -159,19 +160,12 @@ class PinchZoom extends Component<Props> {
   }
 
   _computeInitialOffset() {
-    const x =
-      -abs(
-        this._elRect.width * this._getInitialZoomFactor() - this._rect.width
-      ) / 2;
-    const y =
-      -abs(
-        this._elRect.height * this._getInitialZoomFactor() - this._rect.height
-      ) / 2;
+    const rect = this._getContainerRect();
+    const { width, height } = this._getChildSize();
+    const x = -abs(width * this._getInitialZoomFactor() - rect.width) / 2;
+    const y = -abs(height * this._getInitialZoomFactor() - rect.height) / 2;
 
-    this._initialOffset = {
-      x,
-      y
-    };
+    this._initialOffset = { x, y };
   }
 
   _resetOffset() {
@@ -190,12 +184,12 @@ class PinchZoom extends Component<Props> {
   }
 
   _sanitizeOffset(offset: Point) {
-    const elWidth =
-      this._elRect.width * this._getInitialZoomFactor() * this._zoomFactor;
-    const elHeight =
-      this._elRect.height * this._getInitialZoomFactor() * this._zoomFactor;
-    const maxX = elWidth - this._getContainerX() + this.props.horizontalPadding;
-    const maxY = elHeight - this._getContainerY() + this.props.verticalPadding;
+    const rect = this._getContainerRect();
+    const { width, height } = this._getChildSize();
+    const elWidth = width * this._getInitialZoomFactor() * this._zoomFactor;
+    const elHeight = height * this._getInitialZoomFactor() * this._zoomFactor;
+    const maxX = elWidth - rect.width + this.props.horizontalPadding;
+    const maxY = elHeight - rect.height + this.props.verticalPadding;
     const maxOffsetX = max(maxX, 0);
     const maxOffsetY = max(maxY, 0);
     const minOffsetX = min(maxX, 0) - this.props.horizontalPadding;
@@ -322,8 +316,10 @@ class PinchZoom extends Component<Props> {
   }
 
   _getInitialZoomFactor() {
-    const xZoomFactor = this._rect.width / this._elRect.width;
-    const yZoomFactor = this._rect.height / this._elRect.height;
+    const rect = this._getContainerRect();
+    const size = this._getChildSize();
+    const xZoomFactor = rect.width / size.width;
+    const yZoomFactor = rect.height / size.height;
 
     return min(xZoomFactor, yZoomFactor);
   }
@@ -345,10 +341,11 @@ class PinchZoom extends Component<Props> {
 
   _getOffsetTouches(event: TouchEvent): Array<Point> {
     const { _html, _body } = this.props;
+    const { top, left } = this._getContainerRect();
     const scrollTop = _html.scrollTop || _body.scrollTop;
     const scrollLeft = _html.scrollLeft || _body.scrollLeft;
-    const posTop = this._rect.top + scrollTop;
-    const posLeft = this._rect.left + scrollLeft;
+    const posTop = top + scrollTop;
+    const posLeft = left + scrollLeft;
 
     return getPageCoordinatesByTouches(event.touches).map(({ x, y }) => ({
       x: x - posLeft,
@@ -402,32 +399,34 @@ class PinchZoom extends Component<Props> {
     this._inAnimation = false;
   }
 
-  _getContainerX() {
-    return this._rect.width;
-  }
-
-  _getContainerY() {
-    return this._rect.height;
-  }
-
   _end() {
     this._hasInteraction = false;
     this._sanitize();
     this._update();
   }
 
-  _updateDimensions() {
+  _getContainerRect(): ClientRect {
     const { current: div } = this._containerRef;
 
     // $FlowFixMe
-    this._rect = div.getBoundingClientRect();
+    return div.getBoundingClientRect();
+  }
+
+  _getChildSize(): {| width: number, height: number |} {
+    const { current: div } = this._containerRef;
     // $FlowFixMe
-    this._elRect = div.firstElementChild.getBoundingClientRect();
+    const child = div.firstElementChild;
+
+    return {
+      // $FlowFixMe
+      width: child.offsetWidth || child.clientWidth,
+      // $FlowFixMe
+      height: child.offsetHeight || child.clientHeight
+    };
   }
 
   _onResize = () => {
     this._update();
-    this._updateDimensions();
   };
 
   _bindEvents() {
@@ -436,7 +435,7 @@ class PinchZoom extends Component<Props> {
     if (ResizeObserver) {
       this._containerObserver = new ResizeObserver(this._onResize);
     } else {
-      window.addEventListener("resize", this._onResize);
+      _window.addEventListener("resize", this._onResize);
     }
 
     this._handlers.forEach(([eventName, fn]) => {
@@ -458,7 +457,7 @@ class PinchZoom extends Component<Props> {
       this._containerObserver = null;
     }
 
-    window.removeEventListener("resize", this._onResize);
+    _window.removeEventListener("resize", this._onResize);
 
     this._handlers.forEach(([eventName, fn]) => {
       // $FlowFixMe
@@ -677,7 +676,6 @@ class PinchZoom extends Component<Props> {
       ];
 
   componentDidMount() {
-    this._updateDimensions();
     this._bindEvents();
     this._update();
   }

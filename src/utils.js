@@ -1,5 +1,9 @@
 // @flow
+import type { UpdateAction } from "./PinchZoom/types.js";
 import type { Point } from "./types";
+
+const _window = window;
+const { Math, CSS, navigator } = _window;
 
 export const cancelEvent = (event: any): void => {
   event.stopPropagation();
@@ -48,10 +52,17 @@ export const clamp = (min: number, max: number, value: number): number =>
 
 export const { abs, max, min } = Math;
 
-export const noup = () => {};
-
 export const isTouch = () =>
-  "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  "ontouchstart" in _window || navigator.maxTouchPoints > 0;
 
 export const shouldInterceptWheel = (event: WheelEvent): boolean =>
   !(event.ctrlKey || event.metaKey);
+
+export const hasTranslate3DSupport = () =>
+  CSS && CSS.supports && CSS.supports("transform", "translate3d(0,0,0)");
+
+export const make2dTransformValue = ({ x, y, scale }: UpdateAction) =>
+  `scale(${scale}) translate(${x}px, ${y}px)`;
+
+export const make3dTransformValue = ({ x, y, scale }: UpdateAction) =>
+  `scale3d(${scale},${scale}, 1) translate3d(${x}px, ${y}px, 0)`;

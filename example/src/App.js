@@ -1,18 +1,46 @@
 import React, { Component, createRef } from "react";
 
-import QuickPinchZoom from "react-quick-pinch-zoom";
+import QuickPinchZoom, {
+  make2dTransformValue,
+  make3dTransformValue,
+  hasTranslate3DSupport
+} from "react-quick-pinch-zoom";
+
+const isSafari = /^((?!chrome|android).)*safari/i.test(
+  window.navigator.userAgent
+);
+
+const use3DTransform = hasTranslate3DSupport() && !isSafari;
+
+const makeTransformValue = use3DTransform
+  ? make3dTransformValue
+  : make2dTransformValue;
 
 class App extends Component {
-  imgRef = createRef();
+  innnerRef = createRef();
 
   onUpdate = ({ x, y, scale }) => {
-    const { current: img } = this.imgRef;
+    const { current: div } = this.innnerRef;
 
-    if (img) {
-      img.style.setProperty(
+    if (div) {
+      div.style.setProperty(
         "transform",
-        `scale3d(${scale}, ${scale}, 1) translate3d(${x}px, ${y}px, 0)`
+        makeTransformValue({ x, y, scale }, use3DTransform)
       );
+    }
+  };
+
+  toggleWillChange = () => {
+    const { current: div } = this.innnerRef;
+
+    if (div) {
+      requestAnimationFrame(() => {
+        div.style.setProperty("will-change", "auto");
+
+        requestAnimationFrame(() => {
+          div.style.setProperty("will-change", "transform");
+        });
+      });
     }
   };
 
@@ -23,11 +51,16 @@ class App extends Component {
         <p>
           To change the zoom on the desktop, <b>Ctrl + scroll</b>
         </p>
-        <QuickPinchZoom onUpdate={this.onUpdate}>
-          <img
-            ref={this.imgRef}
-            src="https://user-images.githubusercontent.com/4661784/56037265-88219f00-5d37-11e9-95ef-9cb24be0190e.png"
-          />
+        <QuickPinchZoom
+          onZoomEnd={this.toggleWillChange}
+          onDragEnd={this.toggleWillChange}
+          onUpdate={this.onUpdate}
+        >
+          <div ref={this.innnerRef}>
+            <h2>Text test</h2>
+            <p>And image</p>
+            <img src="https://user-images.githubusercontent.com/4661784/56037265-88219f00-5d37-11e9-95ef-9cb24be0190e.png" />
+          </div>
         </QuickPinchZoom>
       </div>
     );
