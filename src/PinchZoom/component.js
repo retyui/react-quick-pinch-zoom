@@ -16,7 +16,7 @@ import {
   shouldInterceptWheel,
   swing
 } from "../utils";
-import styles from "../styles.css";
+import styles from "./styles.css";
 
 import type { Interaction, Point } from "../types";
 import type { Props } from "./types";
@@ -615,7 +615,7 @@ class PinchZoom extends Component<Props> {
   makeLikeTouchEvent(fn: (e: TouchEvent) => void): MouseEvent => void {
     return mouseEvent => {
       const { pageX, pageY, type } = mouseEvent;
-      const isEnd = type === "mouseup" || type === "mouseleave";
+      const isEnd = type === "mouseup";
       const isStart = type === "mousedown";
       if (isStart) {
         mouseEvent.preventDefault();
@@ -671,7 +671,6 @@ class PinchZoom extends Component<Props> {
         ["mousemove", this.makeLikeTouchEvent(this._handlerOnTouchMove)],
         ["mousedown", this.makeLikeTouchEvent(this._handlerOnTouchStart)],
         ["mouseup", this.makeLikeTouchEvent(this._handlerOnTouchEnd)],
-        ["mouseleave", this.makeLikeTouchEvent(this._handlerOnTouchEnd)],
         ["wheel", this._handlerWheel]
       ];
 
@@ -694,10 +693,10 @@ class PinchZoom extends Component<Props> {
         {...props}
         ref={this._containerRef}
         // $FlowFixMe
-        className={cn(styles.pinchZoomContainer, props.className)}
+        className={cn(styles.a, props.className)}
       >
         {cloneElement(child, {
-          className: cn(styles.pinchZoomElement, child.props.className)
+          className: cn(styles.b, child.props.className)
         })}
       </div>
     );
