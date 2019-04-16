@@ -27,9 +27,8 @@ import type { Props } from "./types";
 
 export const noup = () => {};
 const zeroPoint = { x: 0, y: 0 };
-const {
-  document: { documentElement: _html, body: _body }
-} = window;
+const document = window.document;
+const { documentElement: _html, body: _body } = document;
 
 class PinchZoom extends Component<Props> {
   static defaultProps = {
@@ -441,9 +440,9 @@ class PinchZoom extends Component<Props> {
       window.addEventListener("resize", this._onResize);
     }
 
-    this._handlers.forEach(([eventName, fn]) => {
+    this._handlers.forEach(([eventName, fn, target]) => {
       // $FlowFixMe
-      div.addEventListener(eventName, fn, true);
+      (target || div).addEventListener(eventName, fn, true);
     });
 
     // $FlowFixMe
@@ -462,9 +461,9 @@ class PinchZoom extends Component<Props> {
 
     window.removeEventListener("resize", this._onResize);
 
-    this._handlers.forEach(([eventName, fn]) => {
+    this._handlers.forEach(([eventName, fn, target]) => {
       // $FlowFixMe
-      div.removeEventListener(eventName, fn, true);
+      (target || div).removeEventListener(eventName, fn, true);
     });
   }
 
@@ -680,9 +679,9 @@ class PinchZoom extends Component<Props> {
         ["touchmove", this._handlerOnTouchMove]
       ]
     : [
-        ["mousemove", this.makeLikeTouchEvent(this._handlerOnTouchMove)],
+        ["mousemove", this.makeLikeTouchEvent(this._handlerOnTouchMove), document],
         ["mousedown", this.makeLikeTouchEvent(this._handlerOnTouchStart)],
-        ["mouseup", this.makeLikeTouchEvent(this._handlerOnTouchEnd)],
+        ["mouseup", this.makeLikeTouchEvent(this._handlerOnTouchEnd), document],
         ["wheel", this._handlerWheel]
       ];
 
