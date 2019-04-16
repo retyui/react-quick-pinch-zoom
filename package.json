@@ -3,13 +3,11 @@
   "version": "2.0.3",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
-  "dependencies": {
-    "classnames": "^2.0.0"
-  },
   "peerDependencies": {
     "prop-types": ">=15.0.0",
     "react": ">=16.4.0",
-    "react-dom": ">=16.4.0"
+    "react-dom": ">=16.4.0",
+    "classnames": ">=2.0.0"
   },
   "scripts": {
     "size": "size-limit",
@@ -23,6 +21,7 @@
     "deploy": "gh-pages -d example/build"
   },
   "devDependencies": {
+    "classnames": "^2.0.0",
     "@babel/core": "^7.0.0",
     "@babel/plugin-external-helpers": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",

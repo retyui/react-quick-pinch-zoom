@@ -7,15 +7,18 @@ import {
   calculateScale,
   cancelEvent,
   clamp,
+  getElementSize,
   getPageCoordinatesByTouches,
   getVectorAvg,
   isCloseTo,
+  isDragInteraction,
   isTouch,
+  isZoomGesture,
+  isZoomInteraction,
   max,
   min,
   shouldInterceptWheel,
-  swing,
-  isZoomGeasture
+  swing
 } from "../utils";
 import styles from "./styles.css";
 
@@ -24,13 +27,9 @@ import type { Props } from "./types";
 
 export const noup = () => {};
 const zeroPoint = { x: 0, y: 0 };
-const _window = window;
 const {
-  setTimeout,
-  ResizeObserver,
-  requestAnimationFrame,
   document: { documentElement: _html, body: _body }
-} = _window;
+} = window;
 
 class PinchZoom extends Component<Props> {
   static defaultProps = {
@@ -80,6 +79,7 @@ class PinchZoom extends Component<Props> {
   _updatePlaned: boolean = false;
   _wheelTimeOut: ?TimeoutID = null;
   _zoomFactor: number = 1;
+  _initialZoomFactor: number = 1;
 
   _containerRef = createRef<HTMLDivElement>();
 
@@ -317,12 +317,7 @@ class PinchZoom extends Component<Props> {
   }
 
   _getInitialZoomFactor() {
-    const rect = this._getContainerRect();
-    const size = this._getChildSize();
-    const xZoomFactor = rect.width / size.width;
-    const yZoomFactor = rect.height / size.height;
-
-    return min(xZoomFactor, yZoomFactor);
+    return this._initialZoomFactor;
   }
 
   _getCurrentZoomCenter() {
@@ -417,18 +412,22 @@ class PinchZoom extends Component<Props> {
 
   _getChildSize(): {| width: number, height: number |} {
     const { current: div } = this._containerRef;
-    // $FlowFixMe
-    const child = div.firstElementChild;
+    const child = div && div.firstElementChild;
 
-    return {
-      // $FlowFixMe
-      width: child.offsetWidth || child.clientWidth,
-      // $FlowFixMe
-      height: child.offsetHeight || child.clientHeight
-    };
+    return getElementSize(child);
+  }
+
+  _updateInitialZoomFactor() {
+    const rect = this._getContainerRect();
+    const size = this._getChildSize();
+    const xZoomFactor = rect.width / size.width;
+    const yZoomFactor = rect.height / size.height;
+
+    this._initialZoomFactor = min(xZoomFactor, yZoomFactor);
   }
 
   _onResize = () => {
+    this._updateInitialZoomFactor();
     this._setupOffsets();
     this._update();
   };
@@ -436,10 +435,10 @@ class PinchZoom extends Component<Props> {
   _bindEvents() {
     const { current: div } = this._containerRef;
 
-    if (ResizeObserver) {
+    if (window.ResizeObserver) {
       this._containerObserver = new ResizeObserver(this._onResize);
     } else {
-      _window.addEventListener("resize", this._onResize);
+      window.addEventListener("resize", this._onResize);
     }
 
     this._handlers.forEach(([eventName, fn]) => {
@@ -461,7 +460,7 @@ class PinchZoom extends Component<Props> {
       this._containerObserver = null;
     }
 
-    _window.removeEventListener("resize", this._onResize);
+    window.removeEventListener("resize", this._onResize);
 
     this._handlers.forEach(([eventName, fn]) => {
       // $FlowFixMe
@@ -508,16 +507,16 @@ class PinchZoom extends Component<Props> {
 
     if (interaction !== newInteraction) {
       if (interaction && !newInteraction) {
-        if (interaction === "zoom") {
+        if (isZoomInteraction(interaction)) {
           this._handleZoomEnd();
-        } else if (interaction === "drag") {
+        } else if (isDragInteraction(interaction)) {
           this._handleDragEnd();
         }
       }
 
-      if (newInteraction === "zoom") {
+      if (isZoomInteraction(newInteraction)) {
         this._handleZoomStart();
-      } else if (newInteraction === "drag") {
+      } else if (isDragInteraction(newInteraction)) {
         this._handleDragStart(event);
       }
     }
@@ -551,9 +550,9 @@ class PinchZoom extends Component<Props> {
 
       this._handleDoubleTap(event);
 
-      if (this._interaction === "zoom") {
+      if (isZoomInteraction(this._interaction)) {
         this._handleZoomEnd();
-      } else if (this._interaction === "drag") {
+      } else if (isDragInteraction(this._interaction)) {
         this._handleDragEnd();
       }
     } else {
@@ -592,7 +591,7 @@ class PinchZoom extends Component<Props> {
 
       this._startTouches = getPageCoordinatesByTouches(touchMoveEvent.touches);
     } else {
-      if (this._interaction === "zoom") {
+      if (isZoomInteraction(this._interaction)) {
         if (
           this._startTouches &&
           this._startTouches.length === 2 &&
@@ -606,7 +605,7 @@ class PinchZoom extends Component<Props> {
             )
           );
         }
-      } else if (this._interaction === "drag") {
+      } else if (isDragInteraction(this._interaction)) {
         this._handleDrag(touchMoveEvent);
       }
       if (this._interaction) {
@@ -654,7 +653,7 @@ class PinchZoom extends Component<Props> {
 
     let scaleDelta = 1;
 
-    if (isZoomGeasture(wheelEvent) || deltaMode === 1) {
+    if (isZoomGesture(wheelEvent) || deltaMode === 1) {
       scaleDelta = 15;
     }
 

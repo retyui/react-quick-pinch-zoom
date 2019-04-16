@@ -1,20 +1,28 @@
 // @flow
 import type { UpdateAction } from "./PinchZoom/types.js";
-import type { Point } from "./types";
+import type { Point, Interaction } from "./types";
 
-const _window = window;
-const { Math, CSS, navigator } = _window;
+export const { abs, max, min, sqrt } = Math;
+
+const isMac = /(Mac)/i.test(navigator.platform);
+
+export const isDragInteraction = (i: ?Interaction): boolean => i === "drag";
+
+export const isZoomInteraction = (i: ?Interaction): boolean => i === "zoom";
+
+export const isZoomGesture = (wheelEvent: WheelEvent) =>
+  isMac && wheelEvent.ctrlKey;
 
 export const cancelEvent = (event: any): void => {
   event.stopPropagation();
   event.preventDefault();
 };
 
-export const getDistance = (a: Point, b: Point): number => {
+const getDistance = (a: Point, b: Point): number => {
   const x = a.x - b.x;
   const y = a.y - b.y;
 
-  return Math.sqrt(x * x + y * y);
+  return sqrt(x * x + y * y);
 };
 
 export const calculateScale = (
@@ -40,7 +48,7 @@ export const getPointByPageCoordinates = (touch: Touch): Point => ({
 export const getPageCoordinatesByTouches = (touches: TouchList): Array<Point> =>
   [...touches].map(getPointByPageCoordinates);
 
-export const sum = (a: number, b: number): number => a + b;
+const sum = (a: number, b: number): number => a + b;
 
 export const getVectorAvg = (vectors: Array<Point>): Point => ({
   x: vectors.map(({ x }) => x).reduce(sum, 0) / vectors.length,
@@ -50,24 +58,44 @@ export const getVectorAvg = (vectors: Array<Point>): Point => ({
 export const clamp = (min: number, max: number, value: number): number =>
   value < min ? min : value > max ? max : value;
 
-export const { abs, max, min } = Math;
-
 export const isTouch = () =>
-  "ontouchstart" in _window || navigator.maxTouchPoints > 0;
+  "ontouchstart" in window || navigator.maxTouchPoints > 0;
 
 export const shouldInterceptWheel = (event: WheelEvent): boolean =>
   !(event.ctrlKey || event.metaKey);
 
-export const hasTranslate3DSupport = () =>
-  CSS && CSS.supports && CSS.supports("transform", "translate3d(0,0,0)");
+export const hasTranslate3DSupport = () => {
+  const css = window.CSS;
+
+  return css && css.supports && css.supports("transform", "translate3d(0,0,0)");
+};
+
+export const getElementSize = (
+  element: any
+): {| width: number, height: number |} => {
+  if (element) {
+    const { offsetWidth, offsetHeight } = element;
+
+    // Any DOMElement
+    if (offsetWidth && offsetHeight) {
+      return { width: offsetWidth, height: offsetHeight };
+    }
+
+    // Svg support
+    const style = getComputedStyle(element);
+    const width = parseFloat(style.width);
+    const height = parseFloat(style.height);
+
+    if (height && width) {
+      return { width, height };
+    }
+  }
+
+  return { width: 0, height: 0 };
+};
 
 export const make2dTransformValue = ({ x, y, scale }: UpdateAction) =>
   `scale(${scale}) translate(${x}px, ${y}px)`;
 
 export const make3dTransformValue = ({ x, y, scale }: UpdateAction) =>
   `scale3d(${scale},${scale}, 1) translate3d(${x}px, ${y}px, 0)`;
-
-export const isMac = /(Mac)/i.test(navigator.platform);
-
-export const isZoomGeasture = (wheelEvent: WheelEvent) =>
-  isMac && wheelEvent.ctrlKey && !wheelEvent.metaKey;
