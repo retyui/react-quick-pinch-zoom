@@ -66,3 +66,8 @@ export const make2dTransformValue = ({ x, y, scale }: UpdateAction) =>
 
 export const make3dTransformValue = ({ x, y, scale }: UpdateAction) =>
   `scale3d(${scale},${scale}, 1) translate3d(${x}px, ${y}px, 0)`;
+
+export const isMac = /(Mac)/i.test(navigator.platform);
+
+export const isZoomGeasture = (wheelEvent: WheelEvent) =>
+  isMac && wheelEvent.ctrlKey && !wheelEvent.metaKey;

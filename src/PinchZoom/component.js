@@ -14,7 +14,8 @@ import {
   max,
   min,
   shouldInterceptWheel,
-  swing
+  swing,
+  isZoomGeasture
 } from "../utils";
 import styles from "./styles.css";
 
@@ -385,7 +386,9 @@ class PinchZoom extends Component<Props> {
       } else {
         progress = timeFn(progress);
         frameFn(progress);
-        this._update();
+        this._update({
+          isAnimation: true
+        });
 
         requestAnimationFrame(renderFrame);
       }
@@ -426,6 +429,7 @@ class PinchZoom extends Component<Props> {
   }
 
   _onResize = () => {
+    this._setupOffsets();
     this._update();
   };
 
@@ -465,28 +469,30 @@ class PinchZoom extends Component<Props> {
     });
   }
 
-  _update(event?: { type: string }) {
+  _update(options?: {| isAnimation: boolean |}) {
     if (this._updatePlaned) {
       return;
     }
 
-    this._updatePlaned = true;
-
-    setTimeout(() => {
-      this._updatePlaned = false;
-
-      const type = event && event.type;
-
-      if (type === "resize" || type === "load") {
-        this._setupOffsets();
-      }
-
+    const updateFrame = () => {
       const scale = this._getInitialZoomFactor() * this._zoomFactor;
       const x = -this._offset.x / scale;
       const y = -this._offset.y / scale;
 
       this.props.onUpdate({ scale, x, y });
-    }, 0);
+    };
+
+    if (options && options.isAnimation) {
+      return updateFrame();
+    }
+
+    this._updatePlaned = true;
+
+    requestAnimationFrame(() => {
+      this._updatePlaned = false;
+
+      updateFrame();
+    });
   }
 
   _handlerIfEnable(fn: (...a: any) => void) {
@@ -644,15 +650,22 @@ class PinchZoom extends Component<Props> {
 
     wheelEvent.preventDefault();
 
-    const { pageX, pageY, deltaY } = wheelEvent;
+    const { pageX, pageY, deltaY, deltaMode } = wheelEvent;
+
+    let scaleDelta = 1;
+
+    if (isZoomGeasture(wheelEvent) && deltaMode === 1) {
+      scaleDelta = 15;
+    }
 
     // $FlowFixMe
     const likeTouchEvent: TouchEvent = { touches: [{ pageX, pageY }] };
     const center = this._getOffsetByFirstTouch(likeTouchEvent);
+    const dScale = deltaY * scaleDelta;
 
     this._stopAnimation();
     this._scaleTo(
-      this._zoomFactor - deltaY / this.props.wheelScaleFactor,
+      this._zoomFactor - dScale / this.props.wheelScaleFactor,
       center
     );
     this._update();
