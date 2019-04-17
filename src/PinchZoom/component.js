@@ -201,12 +201,44 @@ class PinchZoom extends Component<Props> {
     };
   }
 
+  scaleTo(...args: [number, Point]) {
+    const startZoomFactor = this._zoomFactor;
+    const startOffset = { ...this._offset };
+
+    this._zoomFactor = 1;
+    this._offset = { x: 0, y: 0 };
+
+    this._scaleTo(...args);
+
+    const diffZoomFactor = this._zoomFactor - startZoomFactor;
+    const diffOffset = {
+      x: this._offset.x - startOffset.x,
+      y: this._offset.y - startOffset.y
+    };
+
+    this._zoomFactor = startZoomFactor;
+    this._offset = { ...startOffset };
+
+    const updateFrame = progress => {
+      const x = startOffset.x + diffOffset.x * progress;
+      const y = startOffset.y + diffOffset.y * progress;
+
+      this._zoomFactor = startZoomFactor + diffZoomFactor * progress;
+      this._offset = { x, y };
+
+      this._update();
+    };
+
+    this._animate(updateFrame, { callback: () => this._sanitize() });
+  }
+
   _scaleTo(zoomFactor: number, center: Point) {
     this._scale(zoomFactor / this._zoomFactor, center);
   }
 
   _scale(scale: number, center: Point) {
     scale = this._scaleZoomFactor(scale);
+
     this._addOffset({
       x: (scale - 1) * (center.x + this._offset.x),
       y: (scale - 1) * (center.y + this._offset.y)
@@ -373,17 +405,13 @@ class PinchZoom extends Component<Props> {
 
       if (frameTime >= duration) {
         frameFn(1);
-        callback();
-        this._update();
         this._stopAnimation();
+        callback();
         this._update();
       } else {
         progress = timeFn(progress);
         frameFn(progress);
-        this._update({
-          isAnimation: true
-        });
-
+        this._update({ isAnimation: true });
         requestAnimationFrame(renderFrame);
       }
     };
@@ -616,7 +644,7 @@ class PinchZoom extends Component<Props> {
     this._firstMove = false;
   });
 
-  makeLikeTouchEvent(fn: (e: TouchEvent) => void): MouseEvent => void {
+  simulate(fn: (e: TouchEvent) => void): MouseEvent => void {
     return mouseEvent => {
       const { pageX, pageY, type } = mouseEvent;
       const isEnd = type === "mouseup";
@@ -679,9 +707,9 @@ class PinchZoom extends Component<Props> {
         ["touchmove", this._handlerOnTouchMove]
       ]
     : [
-        ["mousemove", this.makeLikeTouchEvent(this._handlerOnTouchMove), document],
-        ["mousedown", this.makeLikeTouchEvent(this._handlerOnTouchStart)],
-        ["mouseup", this.makeLikeTouchEvent(this._handlerOnTouchEnd), document],
+        ["mousemove", this.simulate(this._handlerOnTouchMove), document],
+        ["mousedown", this.simulate(this._handlerOnTouchStart)],
+        ["mouseup", this.simulate(this._handlerOnTouchEnd), document],
         ["wheel", this._handlerWheel]
       ];
 
