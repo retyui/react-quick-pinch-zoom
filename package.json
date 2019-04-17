@@ -1,6 +1,6 @@
 {
   "name": "react-quick-pinch-zoom",
-  "version": "2.0.8",
+  "version": "2.0.9",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "peerDependencies": {
