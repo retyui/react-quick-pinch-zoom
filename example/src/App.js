@@ -17,10 +17,10 @@ const makeTransformValue = use3DTransform
   : make2dTransformValue;
 
 class App extends Component {
-  innnerRef = createRef();
+  innerRef = createRef();
 
   onUpdate = ({ x, y, scale }) => {
-    const { current: div } = this.innnerRef;
+    const { current: div } = this.innerRef;
 
     if (div) {
       div.style.setProperty(
@@ -31,7 +31,7 @@ class App extends Component {
   };
 
   toggleWillChange = () => {
-    const { current: div } = this.innnerRef;
+    const { current: div } = this.innerRef;
 
     if (div) {
       requestAnimationFrame(() => {
@@ -56,7 +56,7 @@ class App extends Component {
           onDragEnd={this.toggleWillChange}
           onUpdate={this.onUpdate}
         >
-          <div ref={this.innnerRef}>
+          <div ref={this.innerRef}>
             <h2>Text test</h2>
             <p>And image</p>
             <img src="https://user-images.githubusercontent.com/4661784/56037265-88219f00-5d37-11e9-95ef-9cb24be0190e.png" />

@@ -201,14 +201,30 @@ class PinchZoom extends Component<Props> {
     };
   }
 
-  scaleTo(...args: [number, Point]) {
+  scaleTo(options: {
+    x: number,
+    y: number,
+    scale: number,
+    animated?: boolean,
+    duration?: number
+  }) {
+    const { x, y, scale, animated, duration } = {
+      animated: true,
+      ...options
+    };
+
     const startZoomFactor = this._zoomFactor;
     const startOffset = { ...this._offset };
 
     this._zoomFactor = 1;
     this._offset = { x: 0, y: 0 };
 
-    this._scaleTo(...args);
+    this._scaleTo(scale, { x, y });
+    this._stopAnimation();
+
+    if (!animated) {
+      return this._update();
+    }
 
     const diffZoomFactor = this._zoomFactor - startZoomFactor;
     const diffOffset = {
@@ -229,7 +245,7 @@ class PinchZoom extends Component<Props> {
       this._update();
     };
 
-    this._animate(updateFrame, { callback: () => this._sanitize() });
+    this._animate(updateFrame, { callback: () => this._sanitize(), duration });
   }
 
   _scaleTo(zoomFactor: number, center: Point) {
