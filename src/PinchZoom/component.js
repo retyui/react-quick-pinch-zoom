@@ -209,6 +209,7 @@ class PinchZoom extends Component<Props> {
     duration?: number
   }) {
     const { x, y, scale, animated, duration } = {
+      duration: 250,
       animated: true,
       ...options
     };
