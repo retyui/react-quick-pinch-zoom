@@ -1,6 +1,7 @@
 # react-quick-pinch-zoom
 
 [![NPM](https://img.shields.io/npm/v/react-quick-pinch-zoom.svg)](https://www.npmjs.com/package/react-quick-pinch-zoom)
+[![Travis build status](https://img.shields.io/travis/retyui/react-quick-pinch-zoom.svg?label=unix)](https://travis-ci.org/retyui/react-quick-pinch-zoom)
 
 Based on this module [manuelstofer/pinchzoom](https://github.com/manuelstofer/pinchzoom)
 
