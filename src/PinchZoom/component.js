@@ -201,6 +201,58 @@ class PinchZoom extends Component<Props> {
     };
   }
 
+  alignCenter(options: {
+    x: number,
+    y: number,
+    scale: number,
+    animated?: boolean,
+    duration?: number
+  }) {
+    const { x, y, scale, animated, duration } = {
+      duration: 250,
+      animated: true,
+      ...options
+    };
+
+    const startZoomFactor = this._zoomFactor;
+    const startOffset = { ...this._offset };
+    const rect = this._getContainerRect();
+    const containerCenter = { x: rect.width / 2, y: rect.height / 2 };
+
+    this._zoomFactor = 1;
+    this._offset = { x: -(containerCenter.x - x), y: -(containerCenter.y - y) };
+
+    this._scaleTo(scale, containerCenter);
+    this._stopAnimation();
+
+    if (!animated) {
+      return this._update();
+    }
+
+    const diffZoomFactor = this._zoomFactor - startZoomFactor;
+    const diffOffset = {
+      x: this._offset.x - startOffset.x,
+      y: this._offset.y - startOffset.y
+    };
+
+    this._zoomFactor = startZoomFactor;
+    this._offset = { ...startOffset };
+
+    const updateFrame = progress => {
+      const x = startOffset.x + diffOffset.x * progress;
+      const y = startOffset.y + diffOffset.y * progress;
+
+      this._zoomFactor = startZoomFactor + diffZoomFactor * progress;
+      this._offset = this._sanitizeOffset({ x, y });
+      this._update();
+    };
+
+    this._animate(updateFrame, {
+      callback: () => this._sanitize(),
+      duration
+    });
+  }
+
   scaleTo(options: {
     x: number,
     y: number,
