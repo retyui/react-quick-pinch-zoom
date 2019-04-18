@@ -23,7 +23,7 @@ import {
 import styles from "./styles.css";
 
 import type { Interaction, Point } from "../types";
-import type { Props } from "./types";
+import type { Props, AnimateOptions, ScaleToOptions } from "./types";
 
 export const noup = () => {};
 const zeroPoint = { x: 0, y: 0 };
@@ -215,13 +215,7 @@ class PinchZoom extends Component<Props> {
     };
   }
 
-  alignCenter(options: {
-    x: number,
-    y: number,
-    scale: number,
-    animated?: boolean,
-    duration?: number
-  }) {
+  alignCenter(options: ScaleToOptions) {
     const { x, y, scale, animated, duration } = {
       duration: 250,
       animated: true,
@@ -267,13 +261,7 @@ class PinchZoom extends Component<Props> {
     });
   }
 
-  scaleTo(options: {
-    x: number,
-    y: number,
-    scale: number,
-    animated?: boolean,
-    duration?: number
-  }) {
+  scaleTo(options: ScaleToOptions) {
     const { x, y, scale, animated, duration } = {
       duration: 250,
       animated: true,
@@ -463,14 +451,7 @@ class PinchZoom extends Component<Props> {
     }));
   }
 
-  _animate(
-    frameFn: number => void,
-    options?: $Shape<{|
-      timeFn: number => number,
-      callback: () => void,
-      duration: number
-    |}>
-  ) {
+  _animate(frameFn: number => void, options?: AnimateOptions) {
     const startTime = new Date().getTime();
     const { timeFn, callback, duration } = {
       timeFn: swing,
@@ -757,7 +738,7 @@ class PinchZoom extends Component<Props> {
       return;
     }
 
-    wheelEvent.preventDefault();
+    cancelEvent(wheelEvent);
 
     const { pageX, pageY, deltaY, deltaMode } = wheelEvent;
 

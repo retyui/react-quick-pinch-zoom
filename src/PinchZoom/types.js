@@ -4,6 +4,20 @@ import type { Element } from "react";
 
 export type UpdateAction = { x: number, y: number, scale: number };
 
+export type AnimateOptions =$Shape<{|
+  timeFn: number => number,
+  callback: () => void,
+  duration: number
+|}>;
+
+export type ScaleToOptions = {
+  x: number,
+  y: number,
+  scale: number,
+  animated?: boolean,
+  duration?: number
+};
+
 export type Props = $ReadOnly<{|
   shouldInterceptWheel: (e: WheelEvent) => boolean,
   children: Element<any>,
