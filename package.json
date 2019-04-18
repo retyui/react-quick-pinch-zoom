@@ -10,7 +10,9 @@
     "react-dom": ">=16.4.0"
   },
   "scripts": {
-    "ci": "yarn build; yarn flow; yarn test",
+    "speller": "yaspeller-ci *.md docs/**/*.md",
+    "docs": "doctoc docs/api/README.md",
+    "ci": "yarn speller; yarn build; yarn flow; yarn test",
     "flow": "flow",
     "test": "jest",
     "size": "size-limit",
@@ -29,6 +31,7 @@
     "babel-jest": "^24.7.1",
     "classnames": "^2.0.0",
     "cross-env": "^5.1.4",
+    "doctoc": "^1.4.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "flow-bin": "^0.97.0",
@@ -43,7 +46,8 @@
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-url": "^2.2.1",
-    "size-limit": "^1.0.1"
+    "size-limit": "^1.0.1",
+    "yaspeller-ci": "^1.0.0"
   },
   "files": [
     "dist"

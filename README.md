@@ -3,17 +3,20 @@
 [![NPM](https://img.shields.io/npm/v/react-quick-pinch-zoom.svg)](https://www.npmjs.com/package/react-quick-pinch-zoom)
 [![Travis build status](https://img.shields.io/travis/retyui/react-quick-pinch-zoom.svg?label=unix)](https://travis-ci.org/retyui/react-quick-pinch-zoom)
 
+A react component that lets you zooming and dragging on any DOM element using multi-touch gestures on mobile devices
+and mouse-events\wheel on desktop devices.
 Based on this module [manuelstofer/pinchzoom](https://github.com/manuelstofer/pinchzoom)
 
 ### Component features:
 
 - 🔮 Simple. Easy to use;
-- 🍎 Works on both iOS and Android and with MouseEvents;
-- ⚡ Fast, 60 FPS on mobile devices
+- 🍎 It works with mobile touch gestures and desktop mouse events;
+- ⚡ Fast, 60 FPS on mobile devices.
 
 ## Links
 
-- [Demo](https://react-quick-pinch-zoom.netlify.com/)
+- [API documentation](docs/api/README.md)
+- [Web demos](https://react-quick-pinch-zoom.netlify.com/)
 
 ## Install
 
