@@ -79,10 +79,21 @@ class PinchZoom extends Component<Props> {
   _wheelTimeOut: ?TimeoutID = null;
   _zoomFactor: number = 1;
   _initialZoomFactor: number = 1;
+  // It help reduce behavior difference between touch and mouse events
+  _ignoreNextClick: boolean = false;
 
   _containerRef = createRef<HTMLDivElement>();
 
+  _handleClick = (clickEvent: Event) => {
+    if (this._ignoreNextClick) {
+      this._ignoreNextClick = false;
+
+      clickEvent.stopPropagation();
+    }
+  };
+
   _handleDragStart(event: TouchEvent) {
+    this._ignoreNextClick = true;
     this.props.onDragStart();
 
     this._stopAnimation();
@@ -139,6 +150,10 @@ class PinchZoom extends Component<Props> {
       return;
     }
 
+    this.props.onDoubleTap();
+
+    this._ignoreNextClick = true;
+
     const zoomFactor = this._zoomFactor + this.props.tapZoomFactor;
     const startZoomFactor = this._zoomFactor;
     const updateProgress = progress => {
@@ -156,7 +171,6 @@ class PinchZoom extends Component<Props> {
     }
 
     this._animate(updateProgress);
-    this.props.onDoubleTap();
   }
 
   _computeInitialOffset() {
@@ -779,6 +793,7 @@ class PinchZoom extends Component<Props> {
         ["mousemove", this.simulate(this._handlerOnTouchMove), document],
         ["mousedown", this.simulate(this._handlerOnTouchStart)],
         ["mouseup", this.simulate(this._handlerOnTouchEnd), document],
+        ["click", this._handleClick],
         ["wheel", this._handlerWheel]
       ];
 
