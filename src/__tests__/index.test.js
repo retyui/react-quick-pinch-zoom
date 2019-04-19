@@ -1,6 +1,7 @@
-const React = require("react");
-const { mount } = require("enzyme");
-const { default: QuickPinchZoom } = require("../dist/index");
+import React from "react";
+import { mount } from "enzyme/build";
+
+import QuickPinchZoom from "../index";
 
 const defaultProps = {
   onUpdate: () => {},

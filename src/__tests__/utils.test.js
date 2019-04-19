@@ -1,5 +1,5 @@
-const React = require("react");
-const { make2dTransformValue, make3dTransformValue } = require("../dist/index");
+import React from "react";
+import { make2dTransformValue, make3dTransformValue } from "../index";
 
 it("should return transform 2d value", () => {
   const [x, y, scale] = [100, 150, 2];

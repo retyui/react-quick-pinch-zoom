@@ -38,7 +38,6 @@
     "jest": "^24.7.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "^2.1.8",
     "rollup": "^1.10.0",
     "rollup-plugin-babel": "^4.0.1",
     "rollup-plugin-commonjs": "^9.1.3",
