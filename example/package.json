@@ -4,16 +4,23 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "@babel/polyfill": "^7.4.3",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "^1.1.4",
     "react-quick-pinch-zoom": "link:.."
   },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "parcel-bundler": "^1.12.3"
+  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "parcel -p 3001 src/index.html",
+    "prebuild": "rm -rf dist",
+    "build": "parcel build --no-source-maps src/index.html"
   }
 }

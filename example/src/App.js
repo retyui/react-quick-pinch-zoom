@@ -33,8 +33,10 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <Header />
-        <DemosBar onChange={this.onChange} activeId={this.state.demoId} />
+        <div className="top-container">
+          <Header />
+          <DemosBar onChange={this.onChange} activeId={this.state.demoId} />
+        </div>
         {this.renderDemo()}
       </Fragment>
     );

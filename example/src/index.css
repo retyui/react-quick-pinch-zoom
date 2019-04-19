@@ -25,6 +25,12 @@ button:not([class]) {
   margin-bottom: 10px;
 }
 
+.top-container {
+  background: linear-gradient(to right, #e100ff, #7f00ff);
+  color: #fff;
+  padding: 30px 15px 0 15px;
+}
+
 .reset-line-height {
   line-height: 0;
 }
