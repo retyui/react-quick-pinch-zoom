@@ -1,0 +1,12 @@
+.c-header-title {
+  margin: 0;
+}
+.c-header {
+  background: linear-gradient(to right, #e100ff, #7f00ff);
+  color: #fff;
+  padding: 30px 15px;
+}
+
+.c-header a {
+  color: #fff;
+}

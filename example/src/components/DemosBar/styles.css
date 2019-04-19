@@ -1,0 +1,42 @@
+.select-demo {
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+  -webkit-touch-callout: none;
+  user-select: none;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.select-demo-list {
+  display: flex;
+  padding: 10px 15px 35px 15px;
+}
+
+.select-demo-option + .select-demo-option {
+  margin-left: 10px;
+}
+
+.select-demo-option {
+  padding: 10px 8px;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 99px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none;
+}
+.select-demo-option:hover,
+.select-demo-option-active {
+  background-color: #e100ff;
+  box-shadow: 0px 15px 20px #7f00ff40;
+  color: #fff;
+}
+.select-demo-option:hover {
+  transform: translateY(-3px);
+}

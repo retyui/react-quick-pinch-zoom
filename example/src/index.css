@@ -1,9 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: "IBM Plex Mono", monospace;
 }
 
-img {
+img,
+video {
   max-width: 100%;
+}
+
+code {
+  background-color: #d3d3d3;
+  border-radius: 2px;
+  padding: 2px 5px;
+}
+
+button:not([class]) {
+  min-height: 35px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.reset-line-height {
+  line-height: 0;
+}
+
+.display-inline-block {
+  display: inline-block;
+}
+
+.border-container {
+  border: 2px dashed red;
 }

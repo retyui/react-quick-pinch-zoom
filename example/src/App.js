@@ -1,68 +1,42 @@
-import React, { Component, createRef } from "react";
+import React, { Component, Fragment } from "react";
 
-import QuickPinchZoom, {
-  make2dTransformValue,
-  make3dTransformValue,
-  hasTranslate3DSupport
-} from "react-quick-pinch-zoom";
+import Header from "./components/Header";
+import DemosBar from "./components/DemosBar";
+import Spinner from "./components/Spinner";
 
-const isSafari = /^((?!chrome|android).)*safari/i.test(
-  window.navigator.userAgent
-);
-
-const use3DTransform = hasTranslate3DSupport() && !isSafari;
-
-const makeTransformValue = use3DTransform
-  ? make3dTransformValue
-  : make2dTransformValue;
+import { getDemoComponentById, DEFAULT_ID } from "./data";
 
 class App extends Component {
-  innerRef = createRef();
-
-  onUpdate = ({ x, y, scale }) => {
-    const { current: div } = this.innerRef;
-
-    if (div) {
-      div.style.setProperty(
-        "transform",
-        makeTransformValue({ x, y, scale }, use3DTransform)
-      );
-    }
+  state = {
+    demoId: DEFAULT_ID,
+    demoComponent: null
   };
 
-  toggleWillChange = () => {
-    const { current: div } = this.innerRef;
+  renderDemo() {
+    const Comp = this.state.demoComponent;
 
-    if (div) {
-      requestAnimationFrame(() => {
-        div.style.setProperty("will-change", "auto");
+    return Comp ? <Comp /> : <Spinner />;
+  }
 
-        requestAnimationFrame(() => {
-          div.style.setProperty("will-change", "transform");
-        });
-      });
-    }
+  onChange = demoId => {
+    this.setState({ demoId, demoComponent: null }, async () => {
+      const demoComponent = await getDemoComponentById(demoId);
+
+      this.setState({ demoId, demoComponent });
+    });
   };
+
+  componentDidMount(): void {
+    this.onChange(this.state.demoId);
+  }
 
   render() {
     return (
-      <div>
-        <h1>Demo react-quick-pinch-zoom</h1>
-        <p>
-          To change the zoom on the desktop, <b>Ctrl + scroll</b>
-        </p>
-        <QuickPinchZoom
-          onZoomEnd={this.toggleWillChange}
-          onDragEnd={this.toggleWillChange}
-          onUpdate={this.onUpdate}
-        >
-          <div ref={this.innerRef}>
-            <h2>Text test</h2>
-            <p>And image</p>
-            <img src="https://user-images.githubusercontent.com/4661784/56037265-88219f00-5d37-11e9-95ef-9cb24be0190e.png" />
-          </div>
-        </QuickPinchZoom>
-      </div>
+      <Fragment>
+        <Header />
+        <DemosBar onChange={this.onChange} activeId={this.state.demoId} />
+        {this.renderDemo()}
+      </Fragment>
     );
   }
 }

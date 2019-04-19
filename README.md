@@ -13,6 +13,10 @@ Based on this module [manuelstofer/pinchzoom](https://github.com/manuelstofer/pi
 - 🍎 It works with mobile touch gestures and desktop mouse events;
 - ⚡ Fast, 60 FPS on mobile devices.
 
+## Screenshots
+
+[![](https://raw.githack.com/retyui/react-quick-pinch-zoom/master/docs/img/demo.gif)](https://raw.githack.com/retyui/react-quick-pinch-zoom/master/docs/img/demo.mp4)
+
 ## Links
 
 - [API documentation](docs/api/README.md)

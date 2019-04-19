@@ -1,0 +1,7 @@
+.cell-text {
+  font-size: 10px;
+}
+.cell {
+  fill: transparent;
+  stroke: #000;
+}
