@@ -99,3 +99,14 @@ export const make2dTransformValue = ({ x, y, scale }: UpdateAction) =>
 
 export const make3dTransformValue = ({ x, y, scale }: UpdateAction) =>
   `scale3d(${scale},${scale}, 1) translate3d(${x}px, ${y}px, 0)`;
+
+export const calculateVelocity = (
+  startPoint: Point,
+  endPoint: Point
+): Point => ({
+  x: endPoint.x - startPoint.x,
+  y: endPoint.y - startPoint.y
+});
+
+export const comparePoints = (p1: Point, p2: Point) =>
+  p1.x === p2.x && p1.y === p2.y;

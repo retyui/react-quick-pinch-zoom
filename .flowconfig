@@ -1,11 +1,14 @@
 [ignore]
+.*/@parcel/.*
 
 [include]
 
 [libs]
 
 [lints]
+untyped-type-import=warn
 
 [options]
+emoji=true
 
 [strict]

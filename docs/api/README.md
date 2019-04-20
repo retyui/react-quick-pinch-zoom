@@ -1,9 +1,12 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [All available props](#all-available-props)
 - [Configure](#configure)
   - [`children: React$Element`](#children-reactelement)
+  - [`inertia: boolean`](#inertia-boolean)
+  - [`inertiaFriction: number`](#inertiafriction-number)
   - [`enabled: boolean`](#enabled-boolean)
   - [`isTouch?: () => boolean`](#istouch---boolean)
   - [`shouldInterceptWheel?: (WheelEvent) => boolean`](#shouldinterceptwheel-wheelevent--boolean)
@@ -43,6 +46,8 @@ import QuickPinchZoom from "react-quick-pinch-zoom";
 <QuickPinchZoom
   // `onUpdate` is one required prop
   onUpdate={({ scale, x, y }) => console.log(" --- onUpdate", { scale, x, y })}
+  inertia={true}
+  inertiaFriction={0.96}
   tapZoomFactor={1}
   zoomOutFactor={1.3}
   animationDuration={250}
@@ -68,6 +73,20 @@ import QuickPinchZoom from "react-quick-pinch-zoom";
 ## `children: React$Element`
 
 Children must has only one child (a React element)!
+
+## `inertia: boolean`
+
+Inertia allows drag and resize actions to continue after the user releases the pointer at a fast enough speed.
+
+(default `true`)
+
+## `inertiaFriction: number`
+
+Is a number greater than zero and less than 1 which sets the rate at which the action slows down.
+
+Smaller values slow it down more quickly.
+
+(default `0.96`)
 
 ## `enabled: boolean`
 
