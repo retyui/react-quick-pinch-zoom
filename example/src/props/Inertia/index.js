@@ -12,7 +12,7 @@ const containerProps = {
   className: "border-container display-inline-block reset-line-height"
 };
 
-export default class TapZoomFactor extends Component {
+export default class Inertia extends Component {
   renderChild = ({ innerRef, ...props }) => (
     <SvgGrid
       ref={innerRef}
@@ -31,19 +31,28 @@ export default class TapZoomFactor extends Component {
   render() {
     return (
       <Fragment>
-        <p>Double tap or click to elements</p>
+        <p>Zoom and then drag to see difference</p>
 
-        <pre>{`<QuickPinchZoom tapZoomFactor={0.5} />`}</pre>
+        <pre>{`<QuickPinchZoom inertia={false} />`}</pre>
         <Base
-          tapZoomFactor={0.5}
+          inertia={false}
           containerProps={containerProps}
           ref={this.quickPinchZoomRef}
           Child={this.renderChild}
         />
 
-        <pre>{`<QuickPinchZoom tapZoomFactor={2} />`}</pre>
+        <pre>{`<QuickPinchZoom inertia={true} inertiaFriction={0.96} />`}</pre>
         <Base
-          tapZoomFactor={2}
+          inertia
+          containerProps={containerProps}
+          ref={this.quickPinchZoomRef}
+          Child={this.renderChild}
+        />
+
+        <pre>{`<QuickPinchZoom inertia={true} inertiaFriction={0.8} />`}</pre>
+        <Base
+          inertia
+          inertiaFriction={0.8}
           containerProps={containerProps}
           ref={this.quickPinchZoomRef}
           Child={this.renderChild}

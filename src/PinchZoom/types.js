@@ -4,7 +4,7 @@ import type { Element } from "react";
 
 export type UpdateAction = { x: number, y: number, scale: number };
 
-export type AnimateOptions =$Shape<{|
+export type AnimateOptions = $Shape<{|
   timeFn: number => number,
   callback: () => void,
   duration: number
@@ -25,6 +25,8 @@ export type Props = $ReadOnly<{|
   animationDuration: number,
   wheelScaleFactor: number,
   draggableUnZoomed: boolean,
+  inertia: boolean,
+  inertiaFriction: number,
   enabled: boolean,
   horizontalPadding: number,
   lockDragAxis: boolean,

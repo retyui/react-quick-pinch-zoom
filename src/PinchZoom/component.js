@@ -18,7 +18,9 @@ import {
   max,
   min,
   shouldInterceptWheel,
-  swing
+  swing,
+  calculateVelocity,
+  comparePoints
 } from "../utils";
 import styles from "./styles.css";
 
@@ -35,6 +37,8 @@ class PinchZoom extends Component<Props> {
     animationDuration: 250,
     draggableUnZoomed: true,
     enabled: true,
+    inertia: true,
+    inertiaFriction: 0.96,
     horizontalPadding: 0,
     isTouch,
     lockDragAxis: false,
@@ -58,6 +62,8 @@ class PinchZoom extends Component<Props> {
     _body
   };
 
+  _velocity: ?null;
+  _prevDragMovePoint: ?Point = null;
   _containerObserver: ?ResizeObserver = null;
   _fingers: number = 0;
   _firstMove: boolean = true;
@@ -94,9 +100,11 @@ class PinchZoom extends Component<Props> {
 
   _handleDragStart(event: TouchEvent) {
     this._ignoreNextClick = true;
+
     this.props.onDragStart();
 
     this._stopAnimation();
+    this._resetInertia();
     this._lastDragPosition = null;
     this._hasInteraction = true;
     this._handleDrag(event);
@@ -109,9 +117,68 @@ class PinchZoom extends Component<Props> {
     this._lastDragPosition = touch;
   }
 
+  _resetInertia() {
+    this._velocity = null;
+    this._prevDragMovePoint = null;
+  }
+
+  _realizeInertia() {
+    const { inertiaFriction, inertia } = this.props;
+
+    if (!inertia || !this._velocity) {
+      return;
+    }
+
+    let { x, y } = this._velocity;
+
+    if (x || y) {
+      this._stopAnimation();
+      this._resetInertia();
+
+      const renderFrame = () => {
+        x *= inertiaFriction;
+        y *= inertiaFriction;
+
+        if (!x && !y) {
+          return this._stopAnimation();
+        }
+
+        const prevOffset = { ...this._offset };
+
+        this._addOffset({ x, y });
+        this._offset = this._sanitizeOffset(this._offset);
+
+        if (comparePoints(prevOffset, this._offset)) {
+          return this._stopAnimation();
+        }
+
+        this._update({ isAnimation: true });
+      };
+
+      this._animate(renderFrame, { duration: 9999 });
+    }
+  }
+
+  _collectInertia({ touches }: TouchEvent) {
+    if (!this.props.inertia) {
+      return;
+    }
+
+    const currentCoordinates = getPageCoordinatesByTouches(touches)[0];
+    const prevPoint = this._prevDragMovePoint;
+
+    if (prevPoint) {
+      // $FlowFixMe
+      this._velocity = calculateVelocity(currentCoordinates, prevPoint);
+    }
+
+    this._prevDragMovePoint = currentCoordinates;
+  }
+
   _handleDragEnd() {
     this.props.onDragEnd();
     this._end();
+    this._realizeInertia();
   }
 
   _handleZoomStart() {
@@ -673,6 +740,8 @@ class PinchZoom extends Component<Props> {
       return;
     }
 
+    this._collectInertia(touchMoveEvent);
+
     if (this._firstMove) {
       this._updateInteraction(touchMoveEvent);
 
@@ -784,6 +853,7 @@ class PinchZoom extends Component<Props> {
   }
 
   componentWillUnmount() {
+    this._stopAnimation();
     this._unSubscribe();
   }
 

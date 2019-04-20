@@ -38,6 +38,11 @@ const demos = [
     id: "prop-tapZoomFactor",
     title: "tapZoomFactor",
     component: () => import("./props/TapZoomFactor")
+  },
+  {
+    id: "prop-inertia",
+    title: "inertia",
+    component: () => import("./props/Inertia")
   }
 ];
 
