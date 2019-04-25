@@ -1,6 +1,6 @@
 {
   "name": "react-quick-pinch-zoom",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "peerDependencies": {
@@ -16,7 +16,7 @@
     "flow": "flow",
     "test": "jest",
     "size": "size-limit",
-    "prebuild": "rm -f dist",
+    "prebuild": "rm -rf dist",
     "build": "rollup -c",
     "postbuild": "yarn run size",
     "start": "rollup -c -w",
