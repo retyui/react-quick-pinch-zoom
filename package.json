@@ -16,6 +16,7 @@
     "flow": "flow",
     "test": "jest",
     "size": "size-limit",
+    "prebuild": "rm -f dist",
     "build": "rollup -c",
     "postbuild": "yarn run size",
     "start": "rollup -c -w",
