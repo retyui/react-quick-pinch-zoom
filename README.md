@@ -33,32 +33,34 @@ yarn add react-quick-pinch-zoom
 
 ## Usage
 
-```jsx
-import React, { Component, createRef } from "react";
-
+```jsx harmony
+import React, { useCallback, useRef } from "react";
 import QuickPinchZoom, { make3dTransformValue } from "react-quick-pinch-zoom";
 
-class App extends Component {
-  imgRef = createRef();
+const IMG_URL =
+  "https://user-images.githubusercontent.com/4661784/" +
+  "56037265-88219f00-5d37-11e9-95ef-9cb24be0190e.png";
 
-  onUpdate = ({ x, y, scale }) => {
-    const { current: img } = this.imgRef;
-    const value = make3dTransformValue({ x, y, scale });
+export const App = () => {
+  const imgRef = useRef(null);
+  const onUpdate = useCallback(
+    ({ x, y, scale }) => {
+      const { current: img } = imgRef;
+      const value = make3dTransformValue({ x, y, scale });
 
-    img.style.setProperty("transform", value);
-  };
+      if (img) {
+        img.style.setProperty("transform", value);
+      }
+    },
+    [imgRef]
+  );
 
-  render() {
-    return (
-      <QuickPinchZoom onUpdate={this.onUpdate}>
-        <img
-          ref={this.imgRef}
-          src="https://user-images.githubusercontent.com/4661784/56037265-88219f00-5d37-11e9-95ef-9cb24be0190e.png"
-        />
-      </QuickPinchZoom>
-    );
-  }
-}
+  return (
+    <QuickPinchZoom onUpdate={onUpdate}>
+      <img ref={imgRef} src={IMG_URL} />
+    </QuickPinchZoom>
+  );
+};
 ```
 
 ## License
