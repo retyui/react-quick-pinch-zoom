@@ -4,16 +4,15 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@babel/polyfill": "^7.4.3",
-    "prop-types": "^15.6.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-quick-pinch-zoom": "link:.."
+    "@babel/polyfill": "^7.4.4",
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-transform-runtime": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "parcel-bundler": "^1.12.3"
@@ -21,6 +20,7 @@
   "scripts": {
     "start": "parcel -p 3001 src/index.html",
     "prebuild": "rm -rf dist",
-    "build": "parcel build --no-source-maps src/index.html"
+    "build": "parcel build --no-source-maps src/index.html",
+    "postinstall": "rm -rf node_modules/react-quick-pinch-zoom && mkdir node_modules/react-quick-pinch-zoom && cp -r ../dist node_modules/react-quick-pinch-zoom/dist && cp ../package.json node_modules/react-quick-pinch-zoom/package.json"
   }
 }
