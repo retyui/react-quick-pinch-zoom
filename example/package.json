@@ -5,9 +5,11 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
-    "prop-types": "^15.7.2",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "classnames": ">=2.0.0",
+    "prop-types": ">=15.0.0",
+    "react": ">=16.4.0",
+    "react-dom": ">=16.4.0",
+    "react-quick-pinch-zoom": "^2.0.12"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
