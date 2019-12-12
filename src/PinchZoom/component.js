@@ -181,19 +181,6 @@ class PinchZoom extends Component<Props> {
     this._realizeInertia();
   }
 
-  _handleScroll(wheelEvent) {
-    const deltaY = wheelEvent.deltaY;
-    const deltaX = wheelEvent.deltaX;
-
-    this._addOffset({
-      x: deltaX,
-      y: deltaY
-    });
-
-    this._offset = this._sanitizeOffset(this._offset);
-    this._update();
-  }
-
   _handleZoomStart() {
     this.props.onZoomStart();
     this._stopAnimation();
@@ -817,7 +804,6 @@ class PinchZoom extends Component<Props> {
 
   _handlerWheel = (wheelEvent: WheelEvent) => {
     if (this.props.shouldInterceptWheel(wheelEvent)) {
-      this._handleScroll(wheelEvent);
       return;
     }
 
