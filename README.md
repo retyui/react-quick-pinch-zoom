@@ -2,7 +2,7 @@
 
 [![react-quick-pinch-zoom on npm](https://img.shields.io/npm/v/react-quick-pinch-zoom.svg)](https://www.npmjs.com/package/react-quick-pinch-zoom)
 [![npm downloads](https://img.shields.io/npm/dm/react-quick-pinch-zoom.svg)](https://www.npmtrends.com/react-quick-pinch-zoom)
-[![Travis build status](https://img.shields.io/travis/retyui/react-quick-pinch-zoom.svg?label=unix)](https://travis-ci.org/retyui/react-quick-pinch-zoom)
+[![Travis build status](https://img.shields.io/travis/retyui/react-quick-pinch-zoom/master)](https://travis-ci.org/retyui/react-quick-pinch-zoom)
 
 A react component that lets you zooming and dragging on any DOM element using multi-touch gestures on mobile devices
 and mouse-events\wheel on desktop devices.
