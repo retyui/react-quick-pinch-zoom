@@ -1,4 +1,3 @@
-// @flow
 export { default } from "./PinchZoom/component";
 export {
   hasTranslate3DSupport,

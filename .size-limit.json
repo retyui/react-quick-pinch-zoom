@@ -1,10 +1,10 @@
 [
   {
-    "limit": "5.5 KB",
-    "path": "dist/index.js"
+    "limit": "4400 B",
+    "path": "cmj/**/*.js"
   },
   {
-    "limit": "5.5 KB",
-    "path": "dist/index.es.js"
+    "limit": "4400 B",
+    "path": "esm/**/*.js"
   }
 ]

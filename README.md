@@ -1,8 +1,10 @@
 # react-quick-pinch-zoom
 
-[![react-quick-pinch-zoom on npm](https://img.shields.io/npm/v/react-quick-pinch-zoom.svg)](https://www.npmjs.com/package/react-quick-pinch-zoom)
-[![npm downloads](https://img.shields.io/npm/dm/react-quick-pinch-zoom.svg)](https://www.npmtrends.com/react-quick-pinch-zoom)
-[![Travis build status](https://img.shields.io/travis/retyui/react-quick-pinch-zoom.svg?label=unix)](https://travis-ci.org/retyui/react-quick-pinch-zoom)
+
+[![react-quick-pinch-zoom on npm](https://badgen.net/npm/v/react-quick-pinch-zoom)](http://www.npmjs.com/package/react-quick-pinch-zoom)
+[![react-quick-pinch-zoom downloads](https://badgen.net/npm/dm/react-quick-pinch-zoom)](https://www.npmtrends.com/react-quick-pinch-zoom)
+[![react-quick-pinch-zoom bundle size](https://badgen.net/bundlephobia/minzip/react-quick-pinch-zoom)](https://bundlephobia.com/result?p=react-quick-pinch-zoom)
+[![CI  status](https://img.shields.io/travis/retyui/react-quick-pinch-zoom.svg?label=unix)](https://travis-ci.org/retyui/react-quick-pinch-zoom)
 
 A react component that lets you zooming and dragging on any DOM element using multi-touch gestures on mobile devices
 and mouse-events\wheel on desktop devices.
@@ -42,18 +44,16 @@ const IMG_URL =
   "56037265-88219f00-5d37-11e9-95ef-9cb24be0190e.png";
 
 export const App = () => {
-  const imgRef = useRef(null);
-  const onUpdate = useCallback(
-    ({ x, y, scale }) => {
-      const { current: img } = imgRef;
+  const imgRef = useRef();
+  const onUpdate = useCallback(({ x, y, scale }) => {
+    const { current: img } = imgRef;
+
+    if (img) {
       const value = make3dTransformValue({ x, y, scale });
 
-      if (img) {
-        img.style.setProperty("transform", value);
-      }
-    },
-    [imgRef]
-  );
+      img.style.setProperty('transform', value);
+    }
+  }, []);
 
   return (
     <QuickPinchZoom onUpdate={onUpdate}>
