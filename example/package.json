@@ -12,7 +12,8 @@
     "react-quick-pinch-zoom": "^2.0.12"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-flow": "^7.0.0",
@@ -23,6 +24,6 @@
     "start": "parcel -p 3001 src/index.html",
     "prebuild": "rm -rf dist",
     "build": "parcel build --no-source-maps src/index.html",
-    "postinstall": "rm -rf node_modules/react-quick-pinch-zoom && mkdir node_modules/react-quick-pinch-zoom && cp -r ../dist node_modules/react-quick-pinch-zoom/dist && cp ../package.json node_modules/react-quick-pinch-zoom/package.json"
+    "postinstall": "rm -rf node_modules/react-quick-pinch-zoom && mkdir node_modules/react-quick-pinch-zoom && cp -r ../esm node_modules/react-quick-pinch-zoom/esm && cp ../package.json node_modules/react-quick-pinch-zoom/package.json"
   }
 }
