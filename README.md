@@ -1,10 +1,8 @@
 # react-quick-pinch-zoom
 
-
-[![react-quick-pinch-zoom on npm](https://badgen.net/npm/v/react-quick-pinch-zoom)](http://www.npmjs.com/package/react-quick-pinch-zoom)
-[![react-quick-pinch-zoom downloads](https://badgen.net/npm/dm/react-quick-pinch-zoom)](https://www.npmtrends.com/react-quick-pinch-zoom)
+[![react-quick-pinch-zoom on npm](https://img.shields.io/npm/v/react-quick-pinch-zoom.svg)](https://www.npmjs.com/package/react-quick-pinch-zoom)
+[![npm downloads](https://img.shields.io/npm/dm/react-quick-pinch-zoom.svg)](https://www.npmtrends.com/react-quick-pinch-zoom)
 [![react-quick-pinch-zoom bundle size](https://badgen.net/bundlephobia/minzip/react-quick-pinch-zoom)](https://bundlephobia.com/result?p=react-quick-pinch-zoom)
-[![CI  status](https://img.shields.io/travis/retyui/react-quick-pinch-zoom.svg?label=unix)](https://travis-ci.org/retyui/react-quick-pinch-zoom)
 
 A react component that lets you zooming and dragging on any DOM element using multi-touch gestures on mobile devices
 and mouse-events\wheel on desktop devices.
@@ -51,7 +49,7 @@ export const App = () => {
     if (img) {
       const value = make3dTransformValue({ x, y, scale });
 
-      img.style.setProperty('transform', value);
+      img.style.setProperty("transform", value);
     }
   }, []);
 
