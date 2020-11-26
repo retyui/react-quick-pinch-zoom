@@ -18,6 +18,12 @@ export type ScaleToOptions = {
   duration?: number;
 };
 
+export type State = {
+  _html: any;
+  _body: any;
+  document: any;
+}
+
 export type DefaultProps = {
   shouldInterceptWheel: (e: WheelEvent) => boolean;
   containerProps: React.HTMLAttributes<HTMLDivElement>;
@@ -44,8 +50,6 @@ export type DefaultProps = {
   verticalPadding: number;
   zoomOutFactor: number;
   isTouch: () => boolean;
-  _html: HTMLElement;
-  _body: HTMLElement;
 };
 
 export type RequiredProps = {
