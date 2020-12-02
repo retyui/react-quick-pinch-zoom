@@ -6,8 +6,7 @@ import {
   AnimateOptions,
   ScaleToOptions,
   RequiredProps,
-  DefaultProps,
-  State
+  DefaultProps
 } from "./types";
 import { isTouch } from "../utils";
 
@@ -18,6 +17,8 @@ const { abs, max, min, sqrt } = Math;
 
 const isMac =
   typeof navigator !== "undefined" ? /(Mac)/i.test(navigator.platform) : false;
+
+const isSsr = typeof window === "undefined";
 
 const isDragInteraction = (i: Interaction | null): boolean => i === "drag";
 
@@ -108,7 +109,7 @@ const noup = () => {};
 
 const zeroPoint = { x: 0, y: 0 };
 
-class PinchZoom extends React.Component<RequiredProps & DefaultProps, State> {
+class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
   static defaultProps = {
     animationDuration: 250,
     draggableUnZoomed: true,
@@ -132,7 +133,10 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps, State> {
     tapZoomFactor: 1,
     verticalPadding: 0,
     wheelScaleFactor: 1500,
-    zoomOutFactor: 1.3
+    zoomOutFactor: 1.3,
+    _html: isSsr ? null : document.documentElement,
+    _body: isSsr ? null : document.body,
+    document: isSsr ? null : document
   };
 
   _velocity: Point | null;
@@ -164,11 +168,6 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps, State> {
   _containerRef: {
     readonly current: HTMLDivElement;
   } = React.createRef<HTMLDivElement>();
-
-  state: State = {
-    _html: null,
-    _body: null
-  };
 
   _handleClick = (clickEvent: Event) => {
     if (this._ignoreNextClick) {
@@ -584,7 +583,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps, State> {
   }
 
   _getOffsetTouches(event: TouchEvent): Array<Point> {
-    const { _html, _body } = this.state;
+    const { _html, _body } = this.props;
     const { top, left } = this._getContainerRect();
     const scrollTop = _html.scrollTop || _body.scrollTop;
     const scrollLeft = _html.scrollLeft || _body.scrollLeft;
@@ -932,12 +931,12 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps, State> {
         [
           "mousemove",
           this.simulate(this._handlerOnTouchMove),
-          this.state.document
+          this.props.document
         ],
         [
           "mouseup",
           this.simulate(this._handlerOnTouchEnd),
-          this.state.document
+          this.props.document
         ],
         ["mousedown", this.simulate(this._handlerOnTouchStart)],
         ["click", this._handleClick],
@@ -945,10 +944,6 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps, State> {
       ];
 
   componentDidMount() {
-    const document = window.document;
-    const { documentElement: _html, body: _body } = document;
-
-    this.setState({ _html, _body, document });
     this._bindEvents();
     this._update();
   }
@@ -981,7 +976,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps, State> {
 }
 
 if (process.env.NODE_ENV !== "production") {
-  const { element, object, number, func, bool } = require("prop-types");
+  const { element, object, number, func, bool, any } = require("prop-types");
 
   // @ts-ignore
   PinchZoom.propTypes = {
@@ -1007,7 +1002,10 @@ if (process.env.NODE_ENV !== "production") {
     tapZoomFactor: number,
     verticalPadding: number,
     zoomOutFactor: number,
-    isTouch: func
+    isTouch: func,
+    _html: any,
+    _body: any,
+    document: any
   };
 }
 
