@@ -18,12 +18,6 @@ export type ScaleToOptions = {
   duration?: number;
 };
 
-// export type State = {
-//   _html: any;
-//   _body: any;
-//   document: any;
-// }
-
 export type DefaultProps = {
   shouldInterceptWheel: (e: WheelEvent) => boolean;
   containerProps: React.HTMLAttributes<HTMLDivElement>;

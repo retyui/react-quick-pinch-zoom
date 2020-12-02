@@ -682,7 +682,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
       (target || div).addEventListener(eventName, fn, true);
     });
 
-    Array.from(div.querySelectorAll("img")).forEach((img) =>
+    Array.from(div.querySelectorAll("img")).forEach(img =>
       img.addEventListener("load", this._onResize)
     );
   }
@@ -854,7 +854,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
   });
 
   simulate(fn: (e: TouchEvent) => void): (a: MouseEvent) => void {
-    return (mouseEvent) => {
+    return mouseEvent => {
       const { pageX, pageY, type } = mouseEvent;
       const isEnd = type === "mouseup";
       const isStart = type === "mousedown";
