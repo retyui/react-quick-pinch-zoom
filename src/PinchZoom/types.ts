@@ -45,9 +45,7 @@ export type DefaultProps = {
   zoomOutFactor: number;
   isTouch: () => boolean;
 
-  _html: any;
-  _body: any;
-  document: any;
+  _document: Document;
 };
 
 export type RequiredProps = {
