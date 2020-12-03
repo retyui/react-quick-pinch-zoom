@@ -9,7 +9,7 @@
     "prop-types": ">=15.0.0",
     "react": ">=16.4.0",
     "react-dom": ">=16.4.0",
-    "react-quick-pinch-zoom": "^2.0.12"
+    "react-quick-pinch-zoom": "../."
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
@@ -24,6 +24,6 @@
     "start": "parcel -p 3001 src/index.html",
     "prebuild": "rm -rf dist",
     "build": "parcel build --no-source-maps src/index.html",
-    "postinstall": "rm -rf node_modules/react-quick-pinch-zoom && mkdir node_modules/react-quick-pinch-zoom && cp -r ../esm node_modules/react-quick-pinch-zoom/esm && cp ../package.json node_modules/react-quick-pinch-zoom/package.json"
+    "_postinstall": "rm -rf node_modules/react-quick-pinch-zoom && mkdir node_modules/react-quick-pinch-zoom && cp -r ../esm node_modules/react-quick-pinch-zoom/esm && cp ../package.json node_modules/react-quick-pinch-zoom/package.json"
   }
 }

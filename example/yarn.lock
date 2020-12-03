@@ -4529,10 +4529,8 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-react-quick-pinch-zoom@^2.0.12:
-  version "2.0.12"
-  resolved "https://registry.yarnpkg.com/react-quick-pinch-zoom/-/react-quick-pinch-zoom-2.0.12.tgz#6ce032be40abdd688c6451dd2a04fba3253bdc26"
-  integrity sha512-VGleNpMLmMNT/4AuBFi3ko26oq7js4rXXI1ACzOTUqecWQEPCadxJCGgZuwDPs3z+WIBfRyNiVK7okySaUK1Yw==
+react-quick-pinch-zoom@../.:
+  version "3.0.0"
 
 react@>=16.4.0:
   version "16.12.0"
