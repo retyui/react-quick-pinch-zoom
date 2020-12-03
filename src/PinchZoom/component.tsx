@@ -1,25 +1,27 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { styleRoot, styleChild } from "./styles.css";
-import { Interaction, Point } from "../types";
+import { styleRoot, styleChild, styles } from './styles.css';
+import { Interaction, Point } from '../types';
+import { isTouch } from '../utils';
 import {
   AnimateOptions,
   ScaleToOptions,
   RequiredProps,
-  DefaultProps
-} from "./types";
-import { isTouch } from "../utils";
+  DefaultProps,
+} from './types';
 
 const classnames = (base: string, other?: string): string =>
   other ? `${base} ${other}` : base;
 
 const { abs, max, min, sqrt } = Math;
 
-const isMac = /(Mac)/i.test(navigator.platform);
+const isSsr = typeof window === 'undefined';
 
-const isDragInteraction = (i: Interaction | null): boolean => i === "drag";
+const isMac = isSsr ? /(Mac)/i.test(navigator.platform) : false;
 
-const isZoomInteraction = (i: Interaction | null): boolean => i === "zoom";
+const isDragInteraction = (i: Interaction | null): boolean => i === 'drag';
+
+const isZoomInteraction = (i: Interaction | null): boolean => i === 'zoom';
 
 const isZoomGesture = (wheelEvent: WheelEvent) => isMac && wheelEvent.ctrlKey;
 
@@ -37,7 +39,7 @@ const getDistance = (a: Point, b: Point): number => {
 
 const calculateScale = (
   startTouches: Array<Point>,
-  endTouches: Array<Point>
+  endTouches: Array<Point>,
 ): number => {
   const startDistance = getDistance(startTouches[0], startTouches[1]);
   const endDistance = getDistance(endTouches[0], endTouches[1]);
@@ -52,7 +54,7 @@ const swing = (p: number): number => -Math.cos(p * Math.PI) / 2 + 0.5;
 
 const getPointByPageCoordinates = (touch: Touch): Point => ({
   x: touch.pageX,
-  y: touch.pageY
+  y: touch.pageY,
 });
 
 const getPageCoordinatesByTouches = (touches: TouchList): Array<Point> =>
@@ -62,7 +64,7 @@ const sum = (a: number, b: number): number => a + b;
 
 const getVectorAvg = (vectors: Array<Point>): Point => ({
   x: vectors.map(({ x }) => x).reduce(sum, 0) / vectors.length,
-  y: vectors.map(({ y }) => y).reduce(sum, 0) / vectors.length
+  y: vectors.map(({ y }) => y).reduce(sum, 0) / vectors.length,
 });
 
 const clamp = (min: number, max: number, value: number): number =>
@@ -72,7 +74,7 @@ const shouldInterceptWheel = (event: WheelEvent): boolean =>
   !(event.ctrlKey || event.metaKey);
 
 const getElementSize = (
-  element: HTMLElement | null
+  element: HTMLElement | null,
 ): { width: number; height: number } => {
   if (element) {
     const { offsetWidth, offsetHeight } = element;
@@ -97,7 +99,7 @@ const getElementSize = (
 
 const calculateVelocity = (startPoint: Point, endPoint: Point): Point => ({
   x: endPoint.x - startPoint.x,
-  y: endPoint.y - startPoint.y
+  y: endPoint.y - startPoint.y,
 });
 
 const comparePoints = (p1: Point, p2: Point) => p1.x === p2.x && p1.y === p2.y;
@@ -105,10 +107,6 @@ const comparePoints = (p1: Point, p2: Point) => p1.x === p2.x && p1.y === p2.y;
 const noup = () => {};
 
 const zeroPoint = { x: 0, y: 0 };
-
-const document = window.document;
-
-const { documentElement: _html, body: _body } = document;
 
 class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
   static defaultProps = {
@@ -135,8 +133,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     verticalPadding: 0,
     wheelScaleFactor: 1500,
     zoomOutFactor: 1.3,
-    _html,
-    _body
+    _document: isSsr ? null : window.document,
   };
 
   _velocity: Point | null;
@@ -304,7 +301,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     const updateProgress = (progress: number) => {
       this._scaleTo(
         startZoomFactor + progress * (zoomFactor - startZoomFactor),
-        center
+        center,
       );
     };
     let center = this._getOffsetByFirstTouch(event);
@@ -356,7 +353,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
 
     return {
       x: clamp(minOffsetX, maxOffsetX, offset.x),
-      y: clamp(minOffsetY, maxOffsetY, offset.y)
+      y: clamp(minOffsetY, maxOffsetY, offset.y),
     };
   }
 
@@ -364,7 +361,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     const { x, y, scale, animated, duration } = {
       duration: 250,
       animated: true,
-      ...options
+      ...options,
     };
 
     const startZoomFactor = this._zoomFactor;
@@ -385,7 +382,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     const diffZoomFactor = this._zoomFactor - startZoomFactor;
     const diffOffset = {
       x: this._offset.x - startOffset.x,
-      y: this._offset.y - startOffset.y
+      y: this._offset.y - startOffset.y,
     };
 
     this._zoomFactor = startZoomFactor;
@@ -402,7 +399,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
 
     this._animate(updateFrame, {
       callback: () => this._sanitize(),
-      duration
+      duration,
     });
   }
 
@@ -410,7 +407,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     const { x, y, scale, animated, duration } = {
       duration: 250,
       animated: true,
-      ...options
+      ...options,
     };
 
     const startZoomFactor = this._zoomFactor;
@@ -429,7 +426,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     const diffZoomFactor = this._zoomFactor - startZoomFactor;
     const diffOffset = {
       x: this._offset.x - startOffset.x,
-      y: this._offset.y - startOffset.y
+      y: this._offset.y - startOffset.y,
     };
 
     this._zoomFactor = startZoomFactor;
@@ -457,7 +454,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
 
     this._addOffset({
       x: (scale - 1) * (center.x + this._offset.x),
-      y: (scale - 1) * (center.y + this._offset.y)
+      y: (scale - 1) * (center.y + this._offset.y),
     });
 
     this.props.onZoomUpdate();
@@ -469,7 +466,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     this._zoomFactor = clamp(
       this.props.minZoom,
       this.props.maxZoom,
-      this._zoomFactor
+      this._zoomFactor,
     );
     return this._zoomFactor / originalZoomFactor;
   }
@@ -486,19 +483,19 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
       if (!this.props.lockDragAxis) {
         this._addOffset({
           x,
-          y
+          y,
         });
       } else {
         // lock scroll to position that was changed the most
         if (abs(x) > abs(y)) {
           this._addOffset({
             x,
-            y: 0
+            y: 0,
           });
         } else {
           this._addOffset({
             y,
-            x: 0
+            x: 0,
           });
         }
       }
@@ -512,7 +509,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
 
     this._offset = {
       x: x + offset.x,
-      y: y + offset.y
+      y: y + offset.y,
     };
   }
 
@@ -574,7 +571,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
 
     return {
       x: -1 * x - offsetLeft / (1 / this._zoomFactor - 1),
-      y: -1 * y - offsetTop / (1 / this._zoomFactor - 1)
+      y: -1 * y - offsetTop / (1 / this._zoomFactor - 1),
     };
   }
 
@@ -583,7 +580,9 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
   }
 
   _getOffsetTouches(event: TouchEvent): Array<Point> {
-    const { _html, _body } = this.props;
+    const { _document } = this.props;
+    const _html = _document.documentElement;
+    const _body = _document.body;
     const { top, left } = this._getContainerRect();
     const scrollTop = _html.scrollTop || _body.scrollTop;
     const scrollLeft = _html.scrollLeft || _body.scrollLeft;
@@ -592,7 +591,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
 
     return getPageCoordinatesByTouches(event.touches).map(({ x, y }) => ({
       x: x - posLeft,
-      y: y - posTop
+      y: y - posTop,
     }));
   }
 
@@ -602,7 +601,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
       timeFn: swing,
       callback: () => {},
       duration: this.props.animationDuration,
-      ...options
+      ...options,
     };
     const renderFrame = () => {
       if (!this._inAnimation) {
@@ -675,15 +674,15 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
       // @ts-ignore
       this._containerObserver = new ResizeObserver(this._onResize);
     } else {
-      window.addEventListener("resize", this._onResize);
+      window.addEventListener('resize', this._onResize);
     }
 
     this._handlers.forEach(([eventName, fn, target]) => {
       (target || div).addEventListener(eventName, fn, true);
     });
 
-    Array.from(div.querySelectorAll("img")).forEach(img =>
-      img.addEventListener("load", this._onResize)
+    Array.from(div.querySelectorAll('img')).forEach((img) =>
+      img.addEventListener('load', this._onResize),
     );
   }
 
@@ -695,7 +694,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
       this._containerObserver = null;
     }
 
-    window.removeEventListener("resize", this._onResize);
+    window.removeEventListener('resize', this._onResize);
 
     this._handlers.forEach(([eventName, fn, target]) => {
       (target || div).removeEventListener(eventName, fn, true);
@@ -762,11 +761,11 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     const fingers = this._fingers;
 
     if (fingers === 2) {
-      return this._setInteraction("zoom", event);
+      return this._setInteraction('zoom', event);
     }
 
     if (fingers === 1 && this._canDrag()) {
-      return this._setInteraction("drag", event);
+      return this._setInteraction('drag', event);
     }
 
     this._setInteraction(null, event);
@@ -808,7 +807,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
       this._firstMove = true;
       this._fingers = touchStartEvent.touches.length;
       this._detectDoubleTap(touchStartEvent);
-    }
+    },
   );
 
   _handlerOnTouchMove = this._handlerIfEnable((touchMoveEvent: TouchEvent) => {
@@ -837,8 +836,8 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
             touchMoveEvent,
             calculateScale(
               this._startTouches,
-              getPageCoordinatesByTouches(touchMoveEvent.touches)
-            )
+              getPageCoordinatesByTouches(touchMoveEvent.touches),
+            ),
           );
         }
       } else if (isDragInteraction(this._interaction)) {
@@ -854,10 +853,10 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
   });
 
   simulate(fn: (e: TouchEvent) => void): (a: MouseEvent) => void {
-    return mouseEvent => {
+    return (mouseEvent) => {
       const { pageX, pageY, type } = mouseEvent;
-      const isEnd = type === "mouseup";
-      const isStart = type === "mousedown";
+      const isEnd = type === 'mouseup';
+      const isStart = type === 'mousedown';
       if (isStart) {
         mouseEvent.preventDefault();
 
@@ -870,7 +869,7 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
 
         fn(
           // @ts-ignore
-          mouseEvent
+          mouseEvent,
         );
       }
 
@@ -898,8 +897,8 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     const likeTouchEvent: TouchEvent = {
       touches: [
         // @ts-ignore
-        { pageX, pageY }
-      ]
+        { pageX, pageY },
+      ],
     };
     const center = this._getOffsetByFirstTouch(likeTouchEvent);
     const dScale = deltaY * scaleDelta;
@@ -907,13 +906,13 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     this._stopAnimation();
     this._scaleTo(
       this._zoomFactor - dScale / this.props.wheelScaleFactor,
-      center
+      center,
     );
     this._update();
 
     clearTimeout(
       // @ts-ignore
-      this._wheelTimeOut
+      this._wheelTimeOut,
     );
     this._wheelTimeOut = setTimeout(() => this._sanitize(), 100);
   };
@@ -923,16 +922,24 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     [string, () => void, Document | undefined]
   > = this.props.isTouch()
     ? [
-        ["touchstart", this._handlerOnTouchStart],
-        ["touchend", this._handlerOnTouchEnd],
-        ["touchmove", this._handlerOnTouchMove]
+        ['touchstart', this._handlerOnTouchStart],
+        ['touchend', this._handlerOnTouchEnd],
+        ['touchmove', this._handlerOnTouchMove],
       ]
     : [
-        ["mousemove", this.simulate(this._handlerOnTouchMove), document],
-        ["mouseup", this.simulate(this._handlerOnTouchEnd), document],
-        ["mousedown", this.simulate(this._handlerOnTouchStart)],
-        ["click", this._handleClick],
-        ["wheel", this._handlerWheel]
+        [
+          'mousemove',
+          this.simulate(this._handlerOnTouchMove),
+          this.props._document,
+        ],
+        [
+          'mouseup',
+          this.simulate(this._handlerOnTouchEnd),
+          this.props._document,
+        ],
+        ['mousedown', this.simulate(this._handlerOnTouchStart)],
+        ['click', this._handleClick],
+        ['wheel', this._handlerWheel],
       ];
 
   componentDidMount() {
@@ -951,21 +958,24 @@ class PinchZoom extends React.Component<RequiredProps & DefaultProps> {
     const props = containerProps || {};
 
     return (
-      <div
-        {...props}
-        ref={this._containerRef}
-        className={classnames(styleRoot, props.className)}
-      >
-        {React.cloneElement(child, {
-          className: classnames(styleChild, child.props.className)
-        })}
-      </div>
+      <>
+        <style>{styles}</style>
+        <div
+          {...props}
+          ref={this._containerRef}
+          className={classnames(styleRoot, props.className)}
+        >
+          {React.cloneElement(child, {
+            className: classnames(styleChild, child.props.className),
+          })}
+        </div>
+      </>
     );
   }
 }
 
-if (process.env.NODE_ENV !== "production") {
-  const { element, object, number, any, func, bool } = require("prop-types");
+if (process.env.NODE_ENV !== 'production') {
+  const { any, element, object, number, func, bool } = require('prop-types');
 
   // @ts-ignore
   PinchZoom.propTypes = {
@@ -992,8 +1002,7 @@ if (process.env.NODE_ENV !== "production") {
     verticalPadding: number,
     zoomOutFactor: number,
     isTouch: func,
-    _html: any,
-    _body: any
+    _document: any,
   };
 }
 

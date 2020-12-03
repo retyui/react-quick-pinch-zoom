@@ -44,8 +44,8 @@ export type DefaultProps = {
   verticalPadding: number;
   zoomOutFactor: number;
   isTouch: () => boolean;
-  _html: HTMLElement;
-  _body: HTMLElement;
+
+  _document: Document;
 };
 
 export type RequiredProps = {
