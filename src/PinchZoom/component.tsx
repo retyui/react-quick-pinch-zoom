@@ -17,7 +17,7 @@ const { abs, max, min, sqrt } = Math;
 
 const isSsr = typeof window === 'undefined';
 
-const isMac = isSsr ? /(Mac)/i.test(navigator.platform) : false;
+const isMac = !isSsr ? /(Mac)/i.test(navigator.platform) : false;
 
 const isDragInteraction = (i: Interaction | null): boolean => i === 'drag';
 
