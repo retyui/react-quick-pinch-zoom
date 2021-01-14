@@ -10,15 +10,15 @@ export interface AnimateOptions {
   duration?: number;
 }
 
-export type ScaleToOptions = {
+export interface ScaleToOptions {
   x: number;
   y: number;
   scale: number;
   animated?: boolean;
   duration?: number;
-};
+}
 
-export type DefaultProps = {
+export interface DefaultProps {
   shouldInterceptWheel: (e: WheelEvent) => boolean;
   containerProps: React.HTMLAttributes<HTMLDivElement>;
   animationDuration: number;
@@ -46,9 +46,9 @@ export type DefaultProps = {
   isTouch: () => boolean;
 
   _document: Document;
-};
+}
 
-export type RequiredProps = {
+export interface Props extends DefaultProps {
   onUpdate: (updateAction: UpdateAction) => void;
   children: JSX.Element;
-};
+}
