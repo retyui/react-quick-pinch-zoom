@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.0.2
+
+- Fixed typescript types [#36](https://github.com/retyui/react-quick-pinch-zoom/issues/36)
+
 ## 4.0.0
 
 - Added support SSR [#30](https://github.com/retyui/react-quick-pinch-zoom/pull/30) (thanks [nicolas-cusan](https://github.com/nicolas-cusan))
