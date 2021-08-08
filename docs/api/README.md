@@ -1,7 +1,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [All available props](#all-available-props)
 - [Configure](#configure)
   - [`children: React$Element`](#children-reactelement)
@@ -16,7 +15,7 @@
   - [`animationDuration`](#animationduration)
   - [`maxZoom?: number`](#maxzoom-number)
   - [`minZoom?: number`](#minzoom-number)
-  - [`draggableUnzoomed?: boolean`](#draggableunzoomed-boolean)
+  - [`draggableUnZoomed?: boolean`](#draggableunzoomed-boolean)
   - [`lockDragAxis?: boolean`](#lockdragaxis-boolean)
   - [`setOffsetsOnce?: boolean`](#setoffsetsonce-boolean)
   - [`verticalPadding?: number`](#verticalpadding-number)
@@ -53,7 +52,7 @@ import QuickPinchZoom from "react-quick-pinch-zoom";
   animationDuration={250}
   maxZoom={5}
   minZoom={0.5}
-  draggableUnzoomed={true}
+  draggableUnZoomed={true}
   lockDragAxis={false}
   setOffsetsOnce={false}
   verticalPadding={0}
@@ -145,7 +144,7 @@ Maximum zoom factor. (default `5`)
 
 Minimum zoom factor. (default `0.5`)
 
-## `draggableUnzoomed?: boolean`
+## `draggableUnZoomed?: boolean`
 
 Capture drag events even when the image isn't zoomed.
 
