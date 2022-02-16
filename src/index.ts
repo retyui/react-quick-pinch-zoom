@@ -5,3 +5,9 @@ export {
   make3dTransformValue,
   isTouch,
 } from './utils';
+
+export type {
+  PinchZoomProps,
+  UpdateAction,
+  ScaleToOptions,
+} from './PinchZoom/types';
