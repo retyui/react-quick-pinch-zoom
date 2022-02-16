@@ -284,7 +284,7 @@ class PinchZoom extends React.Component<Props> {
   }
 
   private _handleDoubleTap(event: TouchEvent) {
-    if (this._hasInteraction) {
+    if (this._hasInteraction || this.props.tapZoomFactor === 0) {
       return;
     }
 

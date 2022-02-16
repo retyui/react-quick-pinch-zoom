@@ -124,6 +124,8 @@ This ratio indicate how fast the zoom will change when scrolling over the elemen
 
 Zoom factor that will be added for current zoom Factor when a double tap zooms to.
 
+A value of `0` will disable double tap handling.
+
 (default `1`)
 
 ## `zoomOutFactor?: number`
