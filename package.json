@@ -1,6 +1,6 @@
 {
   "name": "react-quick-pinch-zoom",
-  "version": "4.0.2",
+  "version": "4.1.0",
   "main": "cmj/index.js",
   "module": "esm/index.js",
   "types": "esm/index.d.ts",

@@ -1,6 +1,8 @@
-import type PinchZoomComp from './PinchZoom/component';
+import { ComponentProps } from 'react';
+import PinchZoomComp from './PinchZoom/component';
 
-export { default } from './PinchZoom/component';
+export default PinchZoomComp;
+
 export {
   hasTranslate3DSupport,
   make2dTransformValue,
@@ -12,5 +14,5 @@ export type { UpdateAction, ScaleToOptions } from './PinchZoom/types';
 
 export type PinchZoomProps = JSX.LibraryManagedAttributes<
   typeof PinchZoomComp,
-  React.ComponentProps<typeof PinchZoomComp>
+  ComponentProps<typeof PinchZoomComp>
 >;

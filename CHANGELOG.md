@@ -2,6 +2,11 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.1.0
+
+- Allow disabling double tap [#46](https://github.com/retyui/react-quick-pinch-zoom/pull/46) (thanks [matt-tingen](https://github.com/matt-tingen))
+- Export public API types [#45](https://github.com/retyui/react-quick-pinch-zoom/pull/45) (thanks [matt-tingen](https://github.com/matt-tingen))
+
 ## 4.0.2
 
 - Fixed typescript types [#36](https://github.com/retyui/react-quick-pinch-zoom/issues/36)
