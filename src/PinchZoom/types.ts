@@ -48,13 +48,7 @@ export interface DefaultProps {
   _document: Document;
 }
 
-export interface NonDefaultProps {
+export interface Props extends DefaultProps {
   onUpdate: (updateAction: UpdateAction) => void;
   children: JSX.Element;
 }
-
-// For internal use
-export type Props = NonDefaultProps & DefaultProps;
-
-// For external use
-export type PinchZoomProps = NonDefaultProps & Partial<DefaultProps>;
