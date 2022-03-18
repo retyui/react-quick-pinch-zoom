@@ -1,10 +1,10 @@
 [
   {
-    "limit": "4600 B",
+    "limit": "16000 B",
     "path": "cmj/**/*.js"
   },
   {
-    "limit": "4600 B",
+    "limit": "16000 B",
     "path": "esm/**/*.js"
   }
 ]

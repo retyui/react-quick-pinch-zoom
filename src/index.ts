@@ -1,5 +1,5 @@
-import { ComponentProps } from 'react';
 import PinchZoomComp from './PinchZoom/component';
+import { DefaultProps, RequiredProps } from './PinchZoom/types';
 
 export default PinchZoomComp;
 
@@ -12,7 +12,6 @@ export {
 
 export type { UpdateAction, ScaleToOptions } from './PinchZoom/types';
 
-export type PinchZoomProps = JSX.LibraryManagedAttributes<
-  typeof PinchZoomComp,
-  ComponentProps<typeof PinchZoomComp>
->;
+export interface PinchZoomProps extends RequiredProps, Partial<DefaultProps> {
+  //
+}

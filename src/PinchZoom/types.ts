@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 export interface UpdateAction {
   x: number;
   y: number;
@@ -48,7 +50,11 @@ export interface DefaultProps {
   _document: Document;
 }
 
-export interface Props extends DefaultProps {
+export interface RequiredProps {
   onUpdate: (updateAction: UpdateAction) => void;
-  children: JSX.Element;
+  children: ReactElement;
+}
+
+export interface Props extends DefaultProps, RequiredProps {
+  //
 }

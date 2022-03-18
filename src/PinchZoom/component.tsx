@@ -69,7 +69,7 @@ const shouldInterceptWheel = (event: WheelEvent): boolean =>
   !(event.ctrlKey || event.metaKey);
 
 const getElementSize = (
-  element: HTMLElement | null,
+  element?: HTMLElement | null,
 ): { width: number; height: number } => {
   if (element) {
     const { offsetWidth, offsetHeight } = element;
@@ -642,9 +642,8 @@ class PinchZoom extends React.Component<Props> {
 
   private _getChildSize(): { width: number; height: number } {
     const { current: div } = this._containerRef;
-    const child = div && div.firstElementChild;
 
-    return getElementSize(child as HTMLElement);
+    return getElementSize(div?.firstElementChild as HTMLElement | null);
   }
 
   private _updateInitialZoomFactor() {
@@ -665,9 +664,7 @@ class PinchZoom extends React.Component<Props> {
   private _bindEvents() {
     const { current: div } = this._containerRef;
 
-    // @ts-ignore
     if (window.ResizeObserver) {
-      // @ts-ignore
       this._containerObserver = new ResizeObserver(this._onResize);
     } else {
       window.addEventListener('resize', this._onResize);
@@ -710,7 +707,7 @@ class PinchZoom extends React.Component<Props> {
       this.props.onUpdate({ scale, x, y });
     };
 
-    if (options && options.isAnimation) {
+    if (options?.isAnimation) {
       return updateFrame();
     }
 
@@ -923,29 +920,28 @@ class PinchZoom extends React.Component<Props> {
   };
 
   // @ts-ignore
-  private _handlers: Array<
-    [string, () => void, Document | undefined]
-  > = this.props.isTouch()
-    ? [
-        ['touchstart', this._handlerOnTouchStart],
-        ['touchend', this._handlerOnTouchEnd],
-        ['touchmove', this._handlerOnTouchMove],
-      ]
-    : [
-        [
-          'mousemove',
-          this.simulate(this._handlerOnTouchMove),
-          this.props._document,
-        ],
-        [
-          'mouseup',
-          this.simulate(this._handlerOnTouchEnd),
-          this.props._document,
-        ],
-        ['mousedown', this.simulate(this._handlerOnTouchStart)],
-        ['click', this._handleClick],
-        ['wheel', this._handlerWheel],
-      ];
+  private _handlers: Array<[string, () => void, Document | undefined]> =
+    this.props.isTouch()
+      ? [
+          ['touchstart', this._handlerOnTouchStart],
+          ['touchend', this._handlerOnTouchEnd],
+          ['touchmove', this._handlerOnTouchMove],
+        ]
+      : [
+          [
+            'mousemove',
+            this.simulate(this._handlerOnTouchMove),
+            this.props._document,
+          ],
+          [
+            'mouseup',
+            this.simulate(this._handlerOnTouchEnd),
+            this.props._document,
+          ],
+          ['mousedown', this.simulate(this._handlerOnTouchStart)],
+          ['click', this._handleClick],
+          ['wheel', this._handlerWheel],
+        ];
 
   componentDidMount() {
     this._bindEvents();
