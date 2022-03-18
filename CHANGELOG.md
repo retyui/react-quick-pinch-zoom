@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.2.0
+
+- Mark all `peerDependencies` as optional
+
 ## 4.1.0
 
 - Allow disabling double tap [#46](https://github.com/retyui/react-quick-pinch-zoom/pull/46) (thanks [matt-tingen](https://github.com/matt-tingen))
