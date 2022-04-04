@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.3.0
+
+- Fix SSR issue [#49](https://github.com/retyui/react-quick-pinch-zoom/pull/49) (thanks [bradcerasani](https://github.com/bradcerasani))
+
 ## 4.2.0
 
 - Mark all `peerDependencies` as optional
