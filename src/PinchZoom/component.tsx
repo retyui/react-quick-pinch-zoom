@@ -124,6 +124,7 @@ class PinchZoom extends React.Component<Props> {
     onZoomUpdate: noup,
     setOffsetsOnce: false,
     shouldInterceptWheel,
+    shouldCancelHandledTouchEndEvents: false,
     tapZoomFactor: 1,
     verticalPadding: 0,
     wheelScaleFactor: 1500,
@@ -150,6 +151,7 @@ class PinchZoom extends React.Component<Props> {
   private _listenMouseMove: boolean = false;
   private _nthZoom: number = 0;
   private _offset: Point = { ...zeroPoint };
+  private _startOffset: Point = { ...zeroPoint };
   private _startTouches: Array<Point> | null = null;
   private _updatePlaned: boolean = false;
   private _wheelTimeOut: NodeJS.Timeout | null = null;
@@ -656,9 +658,11 @@ class PinchZoom extends React.Component<Props> {
   }
 
   private _onResize = () => {
-    this._updateInitialZoomFactor();
-    this._setupOffsets();
-    this._update();
+    if (this._containerRef?.current) {
+      this._updateInitialZoomFactor();
+      this._setupOffsets();
+      this._update();
+    }
   };
 
   private _bindEvents() {
@@ -797,7 +801,17 @@ class PinchZoom extends React.Component<Props> {
     (touchEndEvent: TouchEvent) => {
       this._fingers = touchEndEvent.touches.length;
 
-      if (isZoomInteraction(this._interaction) || (isDragInteraction(this._interaction) && this._zoomFactor !== 1)) {
+      if (
+        this.props.shouldCancelHandledTouchEndEvents &&
+        (
+          isZoomInteraction(this._interaction) ||
+          (
+            this._startOffset.x === this._offset.x &&
+            this._startOffset.y === this._offset.y
+          )
+        )
+      ) {
+        console.log('cancel');
         cancelEvent(touchEndEvent);
       }
 
@@ -828,6 +842,7 @@ class PinchZoom extends React.Component<Props> {
           cancelEvent(touchMoveEvent);
         }
 
+        this._startOffset = { ...this._offset };
         this._startTouches = getPageCoordinatesByTouches(
           touchMoveEvent.touches,
         );

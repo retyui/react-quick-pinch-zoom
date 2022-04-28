@@ -22,6 +22,7 @@ export interface ScaleToOptions {
 
 export interface DefaultProps {
   shouldInterceptWheel: (e: WheelEvent) => boolean;
+  shouldCancelHandledTouchEndEvents: boolean;
   containerProps: React.HTMLAttributes<HTMLDivElement>;
   animationDuration: number;
   wheelScaleFactor: number;
