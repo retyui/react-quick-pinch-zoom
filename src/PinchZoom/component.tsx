@@ -665,7 +665,7 @@ class PinchZoom extends React.Component<Props> {
     const { current: div } = this._containerRef;
 
     if (window.ResizeObserver) {
-      this._containerObserver = new ResizeObserver(this._onResize);
+      this._containerObserver = new ResizeObserver(this._onResize).observe(div);
     } else {
       window.addEventListener('resize', this._onResize);
     }
@@ -796,6 +796,11 @@ class PinchZoom extends React.Component<Props> {
   private _handlerOnTouchEnd = this._handlerIfEnable(
     (touchEndEvent: TouchEvent) => {
       this._fingers = touchEndEvent.touches.length;
+
+      if (isZoomInteraction(this._interaction) || (isDragInteraction(this._interaction) && this._zoomFactor !== 1)) {
+        cancelEvent(touchEndEvent);
+      }
+
       this._updateInteraction(touchEndEvent);
     },
   );
