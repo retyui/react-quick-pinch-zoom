@@ -669,7 +669,8 @@ class PinchZoom extends React.Component<Props> {
     const { current: div } = this._containerRef;
 
     if (window.ResizeObserver) {
-      this._containerObserver = new ResizeObserver(this._onResize).observe(div);
+      this._containerObserver = new ResizeObserver(this._onResize);
+      this._containerObserver.observe(div);
     } else {
       window.addEventListener('resize', this._onResize);
     }
@@ -696,6 +697,10 @@ class PinchZoom extends React.Component<Props> {
     this._handlers.forEach(([eventName, fn, target]) => {
       (target || div).removeEventListener(eventName, fn, true);
     });
+
+    Array.from(div.querySelectorAll('img')).forEach((img) =>
+      img.removeEventListener('load', this._onResize),
+    );
   }
 
   private _update(options?: { isAnimation: boolean }) {
@@ -803,13 +808,9 @@ class PinchZoom extends React.Component<Props> {
 
       if (
         this.props.shouldCancelHandledTouchEndEvents &&
-        (
-          isZoomInteraction(this._interaction) ||
-          (
-            this._startOffset.x !== this._offset.x ||
-            this._startOffset.y !== this._offset.y
-          )
-        )
+        (isZoomInteraction(this._interaction) ||
+          this._startOffset.x !== this._offset.x ||
+          this._startOffset.y !== this._offset.y)
       ) {
         cancelEvent(touchEndEvent);
       }
