@@ -8,6 +8,7 @@
   - [`inertiaFriction: number`](#inertiafriction-number)
   - [`enabled: boolean`](#enabled-boolean)
   - [`isTouch?: () => boolean`](#istouch---boolean)
+  - [`shouldCancelHandledTouchEndEvents?: boolean`](#shouldcancelhandledtouchendevents-boolean)
   - [`shouldInterceptWheel?: (WheelEvent) => boolean`](#shouldinterceptwheel-wheelevent--boolean)
   - [`wheelScaleFactor: number`](#wheelscalefactor-number)
   - [`tapZoomFactor?: number`](#tapzoomfactor-number)
@@ -101,6 +102,15 @@ otherwise mouse events and wheel.
 // default
 const isTouch = () => "ontouchstart" in window || navigator.maxTouchPoints > 0;
 ```
+
+## `shouldCancelHandledTouchEndEvents?: boolean`
+
+Cancel touchEnd events when this library makes any visual changes.
+
+(default `false`)
+
+Using `true` allows to bubble the touchEnd event only when no visual changes have been made.
+
 
 ## `shouldInterceptWheel?: (WheelEvent) => boolean`
 
