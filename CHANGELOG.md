@@ -2,6 +2,12 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.4.0
+
+- Added possibility to use this module inside an image slider with own touch support   [#51](https://github.com/retyui/react-quick-pinch-zoom/issues/51) (thanks [martinkutter](https://github.com/martinkutter))
+
+  To enabled it, just add `shouldCancelHandledTouchEndEvents={true}`
+
 ## 4.3.0
 
 - Fix SSR issue [#49](https://github.com/retyui/react-quick-pinch-zoom/pull/49) (thanks [bradcerasani](https://github.com/bradcerasani))
