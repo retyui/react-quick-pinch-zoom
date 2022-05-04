@@ -808,9 +808,16 @@ class PinchZoom extends React.Component<Props> {
 
       if (
         this.props.shouldCancelHandledTouchEndEvents &&
-        (isZoomInteraction(this._interaction) ||
-          this._startOffset.x !== this._offset.x ||
-          this._startOffset.y !== this._offset.y)
+        (
+          isZoomInteraction(this._interaction) ||
+          (
+            isDragInteraction(this._interaction) &&
+            (
+              this._startOffset.x !== this._offset.x ||
+              this._startOffset.y !== this._offset.y
+            )
+          )
+        )
       ) {
         cancelEvent(touchEndEvent);
       }
