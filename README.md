@@ -23,6 +23,10 @@ Based on this module [manuelstofer/pinchzoom](https://github.com/manuelstofer/pi
 ## Install
 
 ```bash
+npm i --save react-quick-pinch-zoom
+```
+or 
+```bash
 yarn add react-quick-pinch-zoom
 ```
 
