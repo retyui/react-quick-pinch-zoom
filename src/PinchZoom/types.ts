@@ -35,6 +35,7 @@ export interface DefaultProps {
 
   maxZoom: number;
   minZoom: number;
+  overflow: boolean;
   onDoubleTap: () => void;
   onDragEnd: () => void;
   onDragStart: () => void;
