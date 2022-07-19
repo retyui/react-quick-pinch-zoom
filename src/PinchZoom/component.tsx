@@ -115,6 +115,7 @@ class PinchZoom extends React.Component<Props> {
     lockDragAxis: false,
     maxZoom: 5,
     minZoom: 0.5,
+    overflow: false,
     onDoubleTap: noup,
     onDragEnd: noup,
     onDragStart: noup,
@@ -808,16 +809,10 @@ class PinchZoom extends React.Component<Props> {
 
       if (
         this.props.shouldCancelHandledTouchEndEvents &&
-        (
-          isZoomInteraction(this._interaction) ||
-          (
-            isDragInteraction(this._interaction) &&
-            (
-              this._startOffset.x !== this._offset.x ||
-              this._startOffset.y !== this._offset.y
-            )
-          )
-        )
+        (isZoomInteraction(this._interaction) ||
+          (isDragInteraction(this._interaction) &&
+            (this._startOffset.x !== this._offset.x ||
+              this._startOffset.y !== this._offset.y)))
       ) {
         cancelEvent(touchEndEvent);
       }
@@ -987,7 +982,7 @@ class PinchZoom extends React.Component<Props> {
 
     return (
       <>
-        <style>{styles}</style>
+        <style>{styles({ overflow: this.props.overflow })}</style>
         <div
           {...props}
           ref={this._containerRef}
@@ -1018,6 +1013,7 @@ if (process.env.NODE_ENV !== 'production') {
     onUpdate: func.isRequired,
     maxZoom: number,
     minZoom: number,
+    overflow: bool,
     onDoubleTap: func,
     onDragEnd: func,
     onDragStart: func,
