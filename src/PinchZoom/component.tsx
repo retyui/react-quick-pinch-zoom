@@ -872,7 +872,7 @@ class PinchZoom extends React.Component<Props> {
       if (this._firstMove) {
         this._updateInteraction(touchMoveEvent);
 
-        if (this._interaction) {
+        if (this._interaction && this._enoughToDrag()) {
           cancelEvent(touchMoveEvent);
         }
 
