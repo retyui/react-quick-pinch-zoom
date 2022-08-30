@@ -1,0 +1,27 @@
+name: Code quality
+
+on:
+  push:
+    paths:
+      - ".github/**"
+      - "yarn.lock"
+      - "**.js"
+      - "**.ts"
+      - "**.tsx"
+
+jobs:
+  test_and_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/cache@master
+        id: node_modules_cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - run: yarn install --frozen-lockfile
+        if: steps.node_modules_cache.outputs.cache-hit != 'true'
+
+      - run: yarn ci
