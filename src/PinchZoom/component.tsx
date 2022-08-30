@@ -157,6 +157,7 @@ class PinchZoom extends React.Component<Props> {
   private _wheelTimeOut: NodeJS.Timeout | null = null;
   private _zoomFactor: number = 1;
   private _initialZoomFactor: number = 1;
+  private _draggingPoint: Point = { ...zeroPoint };
   // It help reduce behavior difference between touch and mouse events
   private _ignoreNextClick: boolean = false;
   // @ts-ignore
@@ -181,12 +182,17 @@ class PinchZoom extends React.Component<Props> {
     this._resetInertia();
     this._lastDragPosition = null;
     this._hasInteraction = true;
+    this._draggingPoint = this._offset;
     this._handleDrag(event);
   }
 
   private _handleDrag(event: TouchEvent) {
     const touch: Point = this._getOffsetByFirstTouch(event);
-    this._drag(touch, this._lastDragPosition);
+    if (this._enoughToDrag()) {
+      this._drag(touch, this._lastDragPosition);
+    } else {
+      this._virtualDrag(touch, this._lastDragPosition);
+    }
     this._offset = this._sanitizeOffset(this._offset);
     this._lastDragPosition = touch;
   }
@@ -502,6 +508,18 @@ class PinchZoom extends React.Component<Props> {
     }
   }
 
+  private _virtualDrag(center: Point, lastCenter: Point | null) {
+    if (lastCenter) {
+      const y = -(center.y - lastCenter.y);
+      const x = -(center.x - lastCenter.x);
+
+      this._draggingPoint = {
+        x: x + this._draggingPoint.x,
+        y: y + this._draggingPoint.y,
+      };
+    }
+  }
+
   private _addOffset(offset: Point) {
     const { x, y } = this._offset;
 
@@ -762,6 +780,21 @@ class PinchZoom extends React.Component<Props> {
     this._interaction = newInteraction;
   }
 
+  private _distanceBetweenNumbers(a: number, b: number) {
+    return a > b ? a - b : b - a;
+  }
+
+  private _enoughToDrag() {
+    if (
+      this._distanceBetweenNumbers(this._startOffset.x, this._draggingPoint.x) >
+        5 ||
+      this._distanceBetweenNumbers(this._startOffset.y, this._draggingPoint.y) >
+        5
+    )
+      return true;
+    return false;
+  }
+
   private _updateInteraction(event: TouchEvent) {
     const fingers = this._fingers;
 
@@ -808,16 +841,10 @@ class PinchZoom extends React.Component<Props> {
 
       if (
         this.props.shouldCancelHandledTouchEndEvents &&
-        (
-          isZoomInteraction(this._interaction) ||
-          (
-            isDragInteraction(this._interaction) &&
-            (
-              this._startOffset.x !== this._offset.x ||
-              this._startOffset.y !== this._offset.y
-            )
-          )
-        )
+        (isZoomInteraction(this._interaction) ||
+          (isDragInteraction(this._interaction) &&
+            (this._startOffset.x !== this._offset.x ||
+              this._startOffset.y !== this._offset.y)))
       ) {
         cancelEvent(touchEndEvent);
       }
