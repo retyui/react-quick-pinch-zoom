@@ -849,6 +849,10 @@ class PinchZoom extends React.Component<Props> {
         cancelEvent(touchEndEvent);
       }
 
+      if (isDragInteraction(this._interaction) && !this._enoughToDrag) {
+        this._handleClick(touchEndEvent);
+      }
+
       this._updateInteraction(touchEndEvent);
     },
   );
