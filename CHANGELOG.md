@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.5.0
+
+- Added a 5-pixel tolerance to the drag event in order to allow clicking [#57](https://github.com/retyui/react-quick-pinch-zoom/pull/57) (thanks [bradcerasani](https://github.com/dminguez))
+
 ## 4.4.0
 
 - Added possibility to use this module inside an image slider with own touch support   [#51](https://github.com/retyui/react-quick-pinch-zoom/issues/51) (thanks [martinkutter](https://github.com/martinkutter))
