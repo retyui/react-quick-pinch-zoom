@@ -2,9 +2,13 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.6.0
+
+- Added zoom out on double tap `doubleTapZoomOutOnMaxScale: boolean` [#64](https://github.com/retyui/react-quick-pinch-zoom/pull/64) (thanks [Maximuson](https://github.com/Maximuson))
+
 ## 4.5.0
 
-- Added a 5-pixel tolerance to the drag event in order to allow clicking [#57](https://github.com/retyui/react-quick-pinch-zoom/pull/57) (thanks [bradcerasani](https://github.com/dminguez))
+- Added a 5-pixel tolerance to the drag event in order to allow clicking [#57](https://github.com/retyui/react-quick-pinch-zoom/pull/57) (thanks [bradcerasani](https://github.com/bradcerasani))
 
 ## 4.4.0
 
