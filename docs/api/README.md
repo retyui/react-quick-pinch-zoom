@@ -144,6 +144,12 @@ Resize to original size when the zoom factor is below this value.
 
 (default `1.3`)
 
+## `doubleTapZoomOutOnMaxScale?: boolean`
+
+Zoom out on double tap if scale same as max scale
+
+(default `false`)
+
 ## `animationDuration`
 
 Animation duration in milliseconds. (default `250`)
