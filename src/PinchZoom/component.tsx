@@ -129,6 +129,7 @@ class PinchZoom extends React.Component<Props> {
     verticalPadding: 0,
     wheelScaleFactor: 1500,
     zoomOutFactor: 1.3,
+    doubleTapZoomOutOnMaxScale: false,
     // @ts-expect-error
     _document: isSsr ? null : window.document,
   };
@@ -296,6 +297,8 @@ class PinchZoom extends React.Component<Props> {
       return;
     }
 
+    const needZoomOut = this.props.doubleTapZoomOutOnMaxScale && this._zoomFactor === this.props.maxZoom;
+
     this.props.onDoubleTap();
 
     this._ignoreNextClick = true;
@@ -316,7 +319,7 @@ class PinchZoom extends React.Component<Props> {
       center = this._getCurrentZoomCenter();
     }
 
-    this._animate(updateProgress);
+    needZoomOut ? this._zoomOutAnimation() :this._animate(updateProgress);
   }
 
   private _computeInitialOffset() {
@@ -1060,6 +1063,7 @@ if (process.env.NODE_ENV !== 'production') {
     tapZoomFactor: number,
     verticalPadding: number,
     zoomOutFactor: number,
+    doubleTapZoomOutOnMaxScale: bool,
     isTouch: func,
     _document: any,
   };

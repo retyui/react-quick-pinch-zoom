@@ -48,6 +48,16 @@ export default class TapZoomFactor extends Component {
           ref={this.quickPinchZoomRef}
           Child={this.renderChild}
         />
+
+        <pre>{`<QuickPinchZoom tapZoomFactor={2} maxZoom={2} doubleTapZoomOutOnMaxScale={true} />`}</pre>
+        <Base
+          tapZoomFactor={2}
+          maxZoom={2}
+          doubleTapZoomOutOnMaxScale={true}
+          containerProps={containerProps}
+          ref={this.quickPinchZoomRef}
+          Child={this.renderChild}
+        />
       </Fragment>
     );
   }

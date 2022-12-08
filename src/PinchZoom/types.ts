@@ -46,6 +46,7 @@ export interface DefaultProps {
   tapZoomFactor: number;
   verticalPadding: number;
   zoomOutFactor: number;
+  doubleTapZoomOutOnMaxScale: boolean;
   isTouch: () => boolean;
 
   _document: Document;
