@@ -1,13 +1,6 @@
 name: Code quality
 
-on:
-  push:
-    paths:
-      - ".github/**"
-      - "yarn.lock"
-      - "**.js"
-      - "**.ts"
-      - "**.tsx"
+on: push
 
 jobs:
   test_and_lint:

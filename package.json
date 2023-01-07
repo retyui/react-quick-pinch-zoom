@@ -28,7 +28,7 @@
     "presize": "yarn build",
     "size": "size-limit",
     "prebuild": "rm -rf esm cmj",
-    "build": "tsc --module ES2020 --declaration true --outDir esm && tsc --module CommonJS --outDir cmj",
+    "build": "tsc --module ES2022 --declaration true --outDir esm && tsc --module CommonJS --outDir cmj",
     "postbuild": "prettier --write cmj/**/*.js esm/**/*.js esm/**/*.d.ts",
     "prepublishOnly": "yarn run build"
   },
