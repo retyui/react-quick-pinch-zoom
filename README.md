@@ -2,7 +2,7 @@
 
 [![react-quick-pinch-zoom on npm](https://img.shields.io/npm/v/react-quick-pinch-zoom.svg)](https://www.npmjs.com/package/react-quick-pinch-zoom)
 [![npm downloads](https://img.shields.io/npm/dm/react-quick-pinch-zoom.svg)](https://www.npmtrends.com/react-quick-pinch-zoom)
-[![react-quick-pinch-zoom bundle size](https://badgen.net/bundlephobia/minzip/react-quick-pinch-zoom)](https://bundlephobia.com/result?p=react-quick-pinch-zoom)
+[![react-quick-pinch-zoom install size](https://packagephobia.com/badge?p=react-quick-pinch-zoom)](https://packagephobia.com/result?p=react-quick-pinch-zoom)
 [![Code quality](https://github.com/retyui/react-quick-pinch-zoom/actions/workflows/nodejs.yml/badge.svg)](https://github.com/retyui/react-quick-pinch-zoom/actions/workflows/nodejs.yml)
 
 A react component that lets you zooming and dragging on any DOM element using multi-touch gestures on mobile devices
@@ -25,7 +25,7 @@ Based on this module [manuelstofer/pinchzoom](https://github.com/manuelstofer/pi
 ```bash
 npm i --save react-quick-pinch-zoom
 ```
-or 
+or
 ```bash
 yarn add react-quick-pinch-zoom
 ```
