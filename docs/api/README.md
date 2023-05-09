@@ -18,6 +18,7 @@
   - [`minZoom?: number`](#minzoom-number)
   - [`draggableUnZoomed?: boolean`](#draggableunzoomed-boolean)
   - [`doubleTapZoomOutOnMaxScale`](#doubletapzoomoutonmaxscale-boolean)
+  - [`doubleTapToggleZoom`](#doubletaptogglezoom-boolean)
   - [`lockDragAxis?: boolean`](#lockdragaxis-boolean)
   - [`setOffsetsOnce?: boolean`](#setoffsetsonce-boolean)
   - [`verticalPadding?: number`](#verticalpadding-number)
@@ -56,6 +57,7 @@ import QuickPinchZoom from "react-quick-pinch-zoom";
   minZoom={0.5}
   draggableUnZoomed={true}
   doubleTapZoomOutOnMaxScale={false}
+  doubleTapToggleZoom={false}
   lockDragAxis={false}
   setOffsetsOnce={false}
   verticalPadding={0}
@@ -149,6 +151,13 @@ Resize to original size when the zoom factor is below this value.
 ## `doubleTapZoomOutOnMaxScale?: boolean`
 
 Zoom out on double tap if scale same as max scale
+
+(default `false`)
+
+## `doubleTapToggleZoom?: boolean`
+
+Zoom out on double tap if zoomed in. Allows zooming in and back out
+with two consecutive double taps.
 
 (default `false`)
 
