@@ -471,6 +471,7 @@ class PinchZoom extends React.Component<Props> {
 
   private _scaleTo(zoomFactor: number, center: Point) {
     this._scale(zoomFactor / this._zoomFactor, center);
+    this._offset = this._sanitizeOffset(this._offset);
   }
 
   private _scale(scale: number, center: Point) {
