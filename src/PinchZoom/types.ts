@@ -27,6 +27,7 @@ export interface DefaultProps {
   animationDuration: number;
   wheelScaleFactor: number;
   draggableUnZoomed: boolean;
+  enforceBoundsDuringZoom: boolean;
   inertia: boolean;
   inertiaFriction: number;
   enabled: boolean;

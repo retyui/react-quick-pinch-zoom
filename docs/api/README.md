@@ -16,6 +16,7 @@
   - [`animationDuration`](#animationduration)
   - [`maxZoom?: number`](#maxzoom-number)
   - [`minZoom?: number`](#minzoom-number)
+  - [`enforceBoundsDuringZoom?: boolean`](#enforceboundsduringzoom-boolean)
   - [`draggableUnZoomed?: boolean`](#draggableunzoomed-boolean)
   - [`lockDragAxis?: boolean`](#lockdragaxis-boolean)
   - [`setOffsetsOnce?: boolean`](#setoffsetsonce-boolean)
@@ -53,6 +54,7 @@ import QuickPinchZoom from "react-quick-pinch-zoom";
   animationDuration={250}
   maxZoom={5}
   minZoom={0.5}
+  enforceBoundsDuringZoom={false}
   draggableUnZoomed={true}
   lockDragAxis={false}
   setOffsetsOnce={false}
@@ -161,6 +163,13 @@ Maximum zoom factor. (default `5`)
 ## `minZoom?: number`
 
 Minimum zoom factor. (default `0.5`)
+
+## `enforceBoundsDuringZoom?: boolean`
+
+While zooming, do not allow moving image to positions it cannot be
+dragged to.
+
+(default `false`)
 
 ## `draggableUnZoomed?: boolean`
 

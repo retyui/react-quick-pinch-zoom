@@ -107,6 +107,7 @@ class PinchZoom extends React.Component<Props> {
   static defaultProps: DefaultProps = {
     animationDuration: 250,
     draggableUnZoomed: true,
+    enforceBoundsDuringZoom: false,
     enabled: true,
     inertia: true,
     inertiaFriction: 0.96,
@@ -282,6 +283,10 @@ class PinchZoom extends React.Component<Props> {
     if (this._nthZoom > 3) {
       this._scale(scale, touchCenter);
       this._drag(touchCenter, this._lastZoomCenter);
+
+      if (this.props.enforceBoundsDuringZoom) {
+        this._offset = this._sanitizeOffset(this._offset);
+      }
     }
 
     this._lastZoomCenter = touchCenter;
@@ -1046,6 +1051,7 @@ if (process.env.NODE_ENV !== 'production') {
     wheelScaleFactor: number,
     animationDuration: number,
     draggableUnZoomed: bool,
+    enforceBoundsDuringZoom: bool,
     enabled: bool,
     horizontalPadding: number,
     lockDragAxis: bool,
