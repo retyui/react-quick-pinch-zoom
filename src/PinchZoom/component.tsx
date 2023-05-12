@@ -551,6 +551,7 @@ class PinchZoom extends React.Component<Props> {
 
   private _sanitize() {
     if (this._zoomFactor < this.props.zoomOutFactor) {
+      this._resetInertia();
       this._zoomOutAnimation();
     } else if (this._isInsaneOffset()) {
       this._sanitizeOffsetAnimation();
