@@ -1,14 +1,19 @@
 import { OffsetBoundsOptions } from './types';
 
+const {min, max} = Math;
+
 export function getOffsetBounds({
   containerDimension,
   childDimension,
-  padding
+  padding,
+  centerContained
 }: OffsetBoundsOptions) {
-  const max = childDimension - containerDimension + padding;
+  const diff = childDimension - containerDimension;
 
-  const maxOffset = Math.max(max, 0);
-  const minOffset = Math.min(max, 0) - padding;
-
-  return [minOffset, maxOffset];
+  if (diff + 2 * padding <= 0 && centerContained) {
+    return [diff / 2, diff / 2]
+  }
+  else {
+    return [min(diff + padding, 0) - padding, max(0, diff + padding)]
+  }
 }

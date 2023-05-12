@@ -24,6 +24,7 @@ export interface OffsetBoundsOptions {
   childDimension: number;
   containerDimension: number;
   padding: number;
+  centerContained?: boolean;
 }
 
 export interface DefaultProps {
@@ -34,6 +35,7 @@ export interface DefaultProps {
   wheelScaleFactor: number;
   draggableUnZoomed: boolean;
   enforceBoundsDuringZoom: boolean;
+  centerContained: boolean;
   inertia: boolean;
   inertiaFriction: number;
   enabled: boolean;

@@ -109,6 +109,7 @@ class PinchZoom extends React.Component<Props> {
     animationDuration: 250,
     draggableUnZoomed: true,
     enforceBoundsDuringZoom: false,
+    centerContained: false,
     enabled: true,
     inertia: true,
     inertiaFriction: 0.96,
@@ -363,13 +364,15 @@ class PinchZoom extends React.Component<Props> {
     const [minOffsetX, maxOffsetX] = getOffsetBounds({
       containerDimension: rect.width,
       childDimension: elWidth,
-      padding: this.props.horizontalPadding
+      padding: this.props.horizontalPadding,
+      centerContained: this.props.centerContained
     });
 
     const [minOffsetY, maxOffsetY] = getOffsetBounds({
       containerDimension: rect.height,
       childDimension: elHeight,
-      padding: this.props.verticalPadding
+      padding: this.props.verticalPadding,
+      centerContained: this.props.centerContained
     })
 
     return {
@@ -1061,6 +1064,7 @@ if (process.env.NODE_ENV !== 'production') {
     animationDuration: number,
     draggableUnZoomed: bool,
     enforceBoundsDuringZoom: bool,
+    centerContained: bool,
     enabled: bool,
     horizontalPadding: number,
     lockDragAxis: bool,
