@@ -17,6 +17,7 @@
   - [`maxZoom?: number`](#maxzoom-number)
   - [`minZoom?: number`](#minzoom-number)
   - [`draggableUnZoomed?: boolean`](#draggableunzoomed-boolean)
+  - [`doubleTapZoomOutOnMaxScale`](#doubletapzoomoutonmaxscale-boolean)
   - [`lockDragAxis?: boolean`](#lockdragaxis-boolean)
   - [`setOffsetsOnce?: boolean`](#setoffsetsonce-boolean)
   - [`verticalPadding?: number`](#verticalpadding-number)
@@ -54,6 +55,7 @@ import QuickPinchZoom from "react-quick-pinch-zoom";
   maxZoom={5}
   minZoom={0.5}
   draggableUnZoomed={true}
+  doubleTapZoomOutOnMaxScale={false}
   lockDragAxis={false}
   setOffsetsOnce={false}
   verticalPadding={0}
@@ -167,6 +169,12 @@ Minimum zoom factor. (default `0.5`)
 Capture drag events even when the image isn't zoomed.
 
 (default `true`)
+
+## `doubleTapZoomOutOnMaxScale?: boolean`
+
+Zoom back out on double tap when the image is fully zoomed in.
+
+(default `false`)
 
 Using `false` allows other libs to pick up drag events
 
