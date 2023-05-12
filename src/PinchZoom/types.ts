@@ -20,6 +20,12 @@ export interface ScaleToOptions {
   duration?: number;
 }
 
+export interface OffsetBoundsOptions {
+  childDimension: number;
+  containerDimension: number;
+  padding: number;
+}
+
 export interface DefaultProps {
   shouldInterceptWheel: (e: WheelEvent) => boolean;
   shouldCancelHandledTouchEndEvents: boolean;

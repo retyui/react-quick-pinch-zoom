@@ -4,11 +4,12 @@ import { styleRoot, styleChild, styles } from './styles.css';
 import { Interaction, Point } from '../types';
 import { isTouch } from '../utils';
 import { AnimateOptions, ScaleToOptions, Props, DefaultProps } from './types';
+import { getOffsetBounds } from './getOffsetBounds';
 
 const classnames = (base: string, other?: string): string =>
   other ? `${base} ${other}` : base;
 
-const { abs, max, min, sqrt } = Math;
+const { abs, min, sqrt } = Math;
 
 const isSsr = typeof window === 'undefined';
 
@@ -358,12 +359,18 @@ class PinchZoom extends React.Component<Props> {
     const { width, height } = this._getChildSize();
     const elWidth = width * this._getInitialZoomFactor() * this._zoomFactor;
     const elHeight = height * this._getInitialZoomFactor() * this._zoomFactor;
-    const maxX = elWidth - rect.width + this.props.horizontalPadding;
-    const maxY = elHeight - rect.height + this.props.verticalPadding;
-    const maxOffsetX = max(maxX, 0);
-    const maxOffsetY = max(maxY, 0);
-    const minOffsetX = min(maxX, 0) - this.props.horizontalPadding;
-    const minOffsetY = min(maxY, 0) - this.props.verticalPadding;
+
+    const [minOffsetX, maxOffsetX] = getOffsetBounds({
+      containerDimension: rect.width,
+      childDimension: elWidth,
+      padding: this.props.horizontalPadding
+    });
+
+    const [minOffsetY, maxOffsetY] = getOffsetBounds({
+      containerDimension: rect.height,
+      childDimension: elHeight,
+      padding: this.props.verticalPadding
+    })
 
     return {
       x: clamp(minOffsetX, maxOffsetX, offset.x),
