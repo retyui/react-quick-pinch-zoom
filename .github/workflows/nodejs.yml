@@ -1,6 +1,8 @@
 name: Code quality
 
-on: push
+on:
+  - push
+  - pull_request
 
 jobs:
   test_and_lint:
