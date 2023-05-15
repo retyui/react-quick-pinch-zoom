@@ -20,6 +20,11 @@ const demos = [
     component: () => import("./methods/DifferentScaleToAndAlignCenter")
   },
   {
+    id: "prop-enforceBoundsDuringZoom",
+    title: "enforceBoundsDuringZoom",
+    component: () => import("./props/EnforceBoundsDuringZoom")
+  },
+  {
     id: "prop-lockDragAxis",
     title: "lockDragAxis",
     component: () => import("./props/LockDragAxis")
