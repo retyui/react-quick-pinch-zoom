@@ -2,6 +2,11 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.7.0
+
+- Added [`enforceBoundsDuringZoom: boolean`](https://github.com/retyui/react-quick-pinch-zoom/blob/master/docs/api/README.md#enforceboundsduringzoom-boolean) prop to ensures that it's also not possible to move the image out of bounds with a pinch gesture. [#72](https://github.com/retyui/react-quick-pinch-zoom/pull/72) (thanks [Tim Fischbach](https://github.com/tf))
+- Added [`doubleTapZoomOutOnMaxScale: boolean`](https://github.com/retyui/react-quick-pinch-zoom/blob/master/docs/api/README.md#doubletapzoomoutonmaxscale-boolean) & [`doubleTapToggleZoom?: boolean`](https://github.com/retyui/react-quick-pinch-zoom/blob/master/docs/api/README.md#doubletaptogglezoom-boolean) props to let the second of two consecutive double taps zoom out again. [#70](https://github.com/retyui/react-quick-pinch-zoom/pull/70) (thanks [Tim Fischbach](https://github.com/tf))
+
 ## 4.6.0
 
 - Added zoom out on double tap `doubleTapZoomOutOnMaxScale: boolean` [#64](https://github.com/retyui/react-quick-pinch-zoom/pull/64) (thanks [Maximuson](https://github.com/Maximuson))
