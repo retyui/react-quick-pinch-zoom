@@ -45,6 +45,11 @@ const demos = [
     component: () => import("./props/TapZoomFactor")
   },
   {
+    id: "prop-doubleTapToggleZoom",
+    title: "doubleTapToggleZoom",
+    component: () => import("./props/DoubleTapToggleZoom")
+  },
+  {
     id: "prop-inertia",
     title: "inertia",
     component: () => import("./props/Inertia")
