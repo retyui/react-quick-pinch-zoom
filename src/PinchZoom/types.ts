@@ -20,6 +20,13 @@ export interface ScaleToOptions {
   duration?: number;
 }
 
+export interface OffsetBoundsOptions {
+  childDimension: number;
+  containerDimension: number;
+  padding: number;
+  centerContained?: boolean;
+}
+
 export interface DefaultProps {
   shouldInterceptWheel: (e: WheelEvent) => boolean;
   shouldCancelHandledTouchEndEvents: boolean;
@@ -28,6 +35,7 @@ export interface DefaultProps {
   wheelScaleFactor: number;
   draggableUnZoomed: boolean;
   enforceBoundsDuringZoom: boolean;
+  centerContained: boolean;
   inertia: boolean;
   inertiaFriction: number;
   enabled: boolean;

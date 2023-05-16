@@ -19,6 +19,7 @@
   - [`maxZoom?: number`](#maxzoom-number)
   - [`minZoom?: number`](#minzoom-number)
   - [`enforceBoundsDuringZoom?: boolean`](#enforceboundsduringzoom-boolean)
+  - [`centerContained?: boolean`](#centercontained-boolean)
   - [`draggableUnZoomed?: boolean`](#draggableunzoomed-boolean)
   - [`doubleTapZoomOutOnMaxScale?: boolean`](#doubletapzoomoutonmaxscale-boolean-1)
   - [`lockDragAxis?: boolean`](#lockdragaxis-boolean)
@@ -58,6 +59,7 @@ import QuickPinchZoom from "react-quick-pinch-zoom";
   maxZoom={5}
   minZoom={0.5}
   enforceBoundsDuringZoom={false}
+  centerContained={false}
   draggableUnZoomed={true}
   doubleTapZoomOutOnMaxScale={false}
   doubleTapToggleZoom={false}
@@ -180,6 +182,14 @@ Minimum zoom factor. (default `0.5`)
 
 While zooming, do not allow moving image to positions it cannot be
 dragged to.
+
+(default `false`)
+
+## `centerContained?: boolean`
+
+Center image, when it does not cover that container (e.g., when the
+container has a fixed size or when the image is scaled down below its
+initial size using a pinch gesture).
 
 (default `false`)
 

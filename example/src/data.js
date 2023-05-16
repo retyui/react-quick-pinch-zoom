@@ -25,6 +25,11 @@ const demos = [
     component: () => import("./props/EnforceBoundsDuringZoom")
   },
   {
+    id: "prop-centerContained",
+    title: "centerContained",
+    component: () => import("./props/CenterContained")
+  },
+  {
     id: "prop-lockDragAxis",
     title: "lockDragAxis",
     component: () => import("./props/LockDragAxis")
