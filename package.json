@@ -4,19 +4,18 @@
   "main": "cmj/index.js",
   "module": "esm/index.js",
   "types": "esm/index.d.ts",
+  "dependencies": {
+    "tslib": ">=2.0.0"
+  },
   "peerDependencies": {
     "react": ">=16.4.0",
-    "react-dom": ">=16.4.0",
-    "tslib": ">=2.0.0"
+    "react-dom": ">=16.4.0"
   },
   "peerDependenciesMeta": {
     "react": {
       "optional": true
     },
     "react-dom": {
-      "optional": true
-    },
-    "tslib": {
       "optional": true
     }
   },
