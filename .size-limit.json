@@ -1,10 +1,12 @@
 [
   {
     "limit": "12000 B",
-    "path": ["cmj/**/*.js", "!cmj/**/__tests__/*.js"]
+    "path": ["cmj/**/*.js", "!cmj/**/__tests__/*.js"],
+    "ignore": ["tslib"]
   },
   {
     "limit": "11000 B",
-    "path": ["esm/**/*.js", "!esm/**/__tests__/*.js"]
+    "path": ["esm/**/*.js", "!esm/**/__tests__/*.js"],
+    "ignore": ["tslib"]
   }
 ]
