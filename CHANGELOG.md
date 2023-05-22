@@ -2,6 +2,10 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.9.0
+
+- Declare `tslib` as `dependencies` instead of `peerDependencies`. [#75](https://github.com/retyui/react-quick-pinch-zoom/pull/75) (thanks [Tim Fischbach](https://github.com/tf))
+
 ## 4.8.0
 
 - Added [`centerContained: boolean`](https://github.com/retyui/react-quick-pinch-zoom/blob/master/docs/api/README.md#enforceboundsduringzoom-boolean) to allow ensuring that images remain centered as long as they still fit into the container. [#73](https://github.com/retyui/react-quick-pinch-zoom/pull/73) (thanks [Tim Fischbach](https://github.com/tf))

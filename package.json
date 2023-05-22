@@ -1,6 +1,6 @@
 {
   "name": "react-quick-pinch-zoom",
-  "version": "4.8.0",
+  "version": "4.9.0",
   "main": "cmj/index.js",
   "module": "esm/index.js",
   "types": "esm/index.d.ts",
@@ -49,7 +49,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "size-limit": "^8.2.4",
-    "tslib": "^2.5.0",
     "typescript": "^5.0.4",
     "yaspeller-ci": "^1.0.2"
   },
