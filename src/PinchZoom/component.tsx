@@ -382,11 +382,15 @@ class PinchZoom extends React.Component<Props> {
   }
 
   alignCenter(options: ScaleToOptions) {
-    const { x, y, scale, animated, duration } = {
+    const { x: __x, y: __y, scale, animated, duration } = {
       duration: 250,
       animated: true,
       ...options,
     };
+    
+    // Bug-Fix: https://github.com/retyui/react-quick-pinch-zoom/issues/58
+    const x = __x * this._initialZoomFactor;
+    const y = __y * this._initialZoomFactor;
 
     const startZoomFactor = this._zoomFactor;
     const startOffset = { ...this._offset };
