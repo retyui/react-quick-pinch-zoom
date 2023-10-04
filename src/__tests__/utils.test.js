@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { make2dTransformValue, make3dTransformValue } from '../index';
 
 it('should return transform 2d value', () => {

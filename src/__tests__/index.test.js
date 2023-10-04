@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { mount } from 'enzyme/build';
+import React from 'react';
+import { render } from '@testing-library/react';
 
 import QuickPinchZoom from '../index';
 
@@ -8,25 +8,25 @@ const defaultProps = {
   children: <div />,
 };
 
-const render = (props) =>
-  mount(<QuickPinchZoom {...defaultProps} {...props} />);
+const renderQuickPinchZoom = (props) =>
+  render(<QuickPinchZoom {...defaultProps} {...props} />);
 
 describe('QuickPinchZoom', () => {
   it('should render correctly', () => {
-    const wrap = render({
+    const wrap = renderQuickPinchZoom({
       children: <div />,
     });
   });
 
   it('should raises an error when children is not single react element', () => {
     expect(() => {
-      render({
+      renderQuickPinchZoom({
         children: null,
       });
     }).toThrow();
 
     expect(() => {
-      render({
+      renderQuickPinchZoom({
         children: [<div />, <div />],
       });
     }).toThrow();

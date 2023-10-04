@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import { styleRoot, styleChild, styles } from './styles.css';
 import { Interaction, Point } from '../types';
@@ -305,7 +305,9 @@ class PinchZoom extends React.Component<Props> {
       return;
     }
 
-    const needZoomOut = (this.props.doubleTapZoomOutOnMaxScale && this._zoomFactor === this.props.maxZoom) ||
+    const needZoomOut =
+      (this.props.doubleTapZoomOutOnMaxScale &&
+        this._zoomFactor === this.props.maxZoom) ||
       (this.props.doubleTapToggleZoom && this._zoomFactor > 1);
 
     this.props.onDoubleTap();
@@ -328,7 +330,7 @@ class PinchZoom extends React.Component<Props> {
       center = this._getCurrentZoomCenter();
     }
 
-    needZoomOut ? this._zoomOutAnimation() :this._animate(updateProgress);
+    needZoomOut ? this._zoomOutAnimation() : this._animate(updateProgress);
   }
 
   private _computeInitialOffset() {
@@ -365,15 +367,15 @@ class PinchZoom extends React.Component<Props> {
       containerDimension: rect.width,
       childDimension: elWidth,
       padding: this.props.horizontalPadding,
-      centerContained: this.props.centerContained
+      centerContained: this.props.centerContained,
     });
 
     const [minOffsetY, maxOffsetY] = getOffsetBounds({
       containerDimension: rect.height,
       childDimension: elHeight,
       padding: this.props.verticalPadding,
-      centerContained: this.props.centerContained
-    })
+      centerContained: this.props.centerContained,
+    });
 
     return {
       x: clamp(minOffsetX, maxOffsetX, offset.x),
@@ -382,12 +384,18 @@ class PinchZoom extends React.Component<Props> {
   }
 
   alignCenter(options: ScaleToOptions) {
-    const { x: __x, y: __y, scale, animated, duration } = {
+    const {
+      x: __x,
+      y: __y,
+      scale,
+      animated,
+      duration,
+    } = {
       duration: 250,
       animated: true,
       ...options,
     };
-    
+
     // Bug-Fix: https://github.com/retyui/react-quick-pinch-zoom/issues/58
     const x = __x * this._initialZoomFactor;
     const y = __y * this._initialZoomFactor;
