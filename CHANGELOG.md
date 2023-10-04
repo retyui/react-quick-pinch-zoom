@@ -2,6 +2,11 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.0.0
+
+- Fix: inconsistent zooms in different screen-sizes. [#75](https://github.com/retyui/react-quick-pinch-zoom/pull/82) (thanks [Blindman139](https://github.com/Blindman139))
+
+
 ## 4.9.0
 
 - Declare `tslib` as `dependencies` instead of `peerDependencies`. [#75](https://github.com/retyui/react-quick-pinch-zoom/pull/75) (thanks [Tim Fischbach](https://github.com/tf))
