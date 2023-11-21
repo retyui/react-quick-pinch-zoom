@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, createRef, Children, cloneElement } from 'react';
 
 import { styleRoot, styleChild, styles } from './styles.css';
 import { Interaction, Point } from '../types';
@@ -104,7 +104,7 @@ const noup = () => {};
 
 const zeroPoint = { x: 0, y: 0 };
 
-class PinchZoom extends React.Component<Props> {
+class PinchZoom extends Component<Props> {
   static defaultProps: DefaultProps = {
     animationDuration: 250,
     draggableUnZoomed: true,
@@ -168,7 +168,7 @@ class PinchZoom extends React.Component<Props> {
   // @ts-ignore
   private _containerRef: {
     readonly current: HTMLDivElement;
-  } = React.createRef<HTMLDivElement>();
+  } = createRef<HTMLDivElement>();
 
   private _handleClick = (clickEvent: Event) => {
     if (this._ignoreNextClick) {
@@ -1047,7 +1047,7 @@ class PinchZoom extends React.Component<Props> {
 
   render() {
     const { children, containerProps } = this.props;
-    const child = React.Children.only(children);
+    const child = Children.only(children);
     const props = containerProps || {};
 
     return (
@@ -1058,7 +1058,7 @@ class PinchZoom extends React.Component<Props> {
           ref={this._containerRef}
           className={classnames(styleRoot, props.className)}
         >
-          {React.cloneElement(child, {
+          {cloneElement(child, {
             className: classnames(styleChild, child.props.className),
           })}
         </div>

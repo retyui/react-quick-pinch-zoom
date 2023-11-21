@@ -1,5 +1,5 @@
 import PinchZoomComp from './PinchZoom/component';
-import { DefaultProps, RequiredProps } from './PinchZoom/types';
+import type { DefaultProps, RequiredProps } from './PinchZoom/types';
 
 export default PinchZoomComp;
 
@@ -13,5 +13,5 @@ export {
 export type { UpdateAction, ScaleToOptions } from './PinchZoom/types';
 
 export interface PinchZoomProps extends RequiredProps, Partial<DefaultProps> {
-  //
+  // noop
 }
