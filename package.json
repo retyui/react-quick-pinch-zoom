@@ -24,9 +24,8 @@
     }
   },
   "scripts": {
-    "speller": "yaspeller-ci *.md docs/**/*.md",
     "docs": "npx doctoc docs/api/README.md",
-    "ci": "yarn speller && yarn size && yarn test",
+    "ci": "yarn size && yarn test",
     "test": "jest --silent",
     "presize": "yarn build",
     "size": "size-limit",
@@ -36,24 +35,26 @@
     "prepublishOnly": "yarn run build"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.0",
-    "@babel/preset-env": "^7.22.20",
-    "@babel/preset-react": "^7.22.15",
-    "@babel/preset-typescript": "^7.23.0",
-    "@size-limit/preset-small-lib": "^9.0.0",
-    "@testing-library/react": "^14.0.0",
-    "@types/jest": "^29.5.5",
-    "@types/react": "^18.2.24",
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-react": "^7.23.3",
+    "@babel/preset-typescript": "^7.23.3",
+    "@size-limit/preset-small-lib": "^11.0.2",
+    "@testing-library/react": "^14.2.1",
+    "@types/jest": "^29.5.12",
+    "@types/react": "^18.2.58",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "prettier": "^3.0.3",
+    "prettier": "^3.2.5",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "size-limit": "^9.0.0",
-    "typescript": "^5.2.2",
-    "yaspeller-ci": "^1.0.2"
+    "size-limit": "^11.0.2",
+    "typescript": "^5.3.3"
+  },
+  "resolutions": {
+    "@types/react": "^18.2.58"
   },
   "files": [
     "cmj",
