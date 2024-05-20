@@ -18,7 +18,7 @@ Based on this module [manuelstofer/pinchzoom](https://github.com/manuelstofer/pi
 ## Links
 
 - [API documentation](docs/api/README.md)
-- [Web demos](https://react-quick-pinch-zoom.netlify.com/)
+- [Web demos](https://react-quick-pinch-zoom.netlify.app/)
 
 ## Install
 
