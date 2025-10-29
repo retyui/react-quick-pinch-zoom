@@ -1046,13 +1046,13 @@ class PinchZoom extends Component<Props> {
   }
 
   render() {
-    const { children, containerProps } = this.props;
+    const { children, containerProps, nonce } = this.props;
     const child = Children.only(children);
     const props = containerProps || {};
 
     return (
       <>
-        <style>{styles}</style>
+        <style nonce={nonce}>{styles}</style>
         <div
           {...props}
           ref={this._containerRef}
@@ -1068,7 +1068,7 @@ class PinchZoom extends Component<Props> {
 }
 
 if (process.env.NODE_ENV !== 'production') {
-  const { any, element, object, number, func, bool } = require('prop-types');
+  const { any, element, object, number, func, bool, string } = require('prop-types');
 
   // @ts-ignore
   PinchZoom.propTypes = {
@@ -1082,6 +1082,7 @@ if (process.env.NODE_ENV !== 'production') {
     enabled: bool,
     horizontalPadding: number,
     lockDragAxis: bool,
+    nonce: string,
     onUpdate: func.isRequired,
     maxZoom: number,
     minZoom: number,
