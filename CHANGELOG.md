@@ -2,9 +2,14 @@
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 5.1.1
+
+- Add CSP `nonce` prop. [#93](https://github.com/retyui/react-quick-pinch-zoom/pull/93) (thanks [RiledUpCrow](https://github.com/RiledUpCrow))
+
+
 ## 5.0.0
 
-- Fix: inconsistent zooms in different screen-sizes. [#75](https://github.com/retyui/react-quick-pinch-zoom/pull/82) (thanks [Blindman139](https://github.com/Blindman139))
+- Fix: inconsistent zooms in different screen-sizes. [#82](https://github.com/retyui/react-quick-pinch-zoom/pull/82) (thanks [Blindman139](https://github.com/Blindman139))
 
 
 ## 4.9.0
