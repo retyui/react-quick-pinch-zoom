@@ -41,6 +41,7 @@ export interface DefaultProps {
   enabled: boolean;
   horizontalPadding: number;
   lockDragAxis: boolean;
+  nonce?: string;
 
   maxZoom: number;
   minZoom: number;

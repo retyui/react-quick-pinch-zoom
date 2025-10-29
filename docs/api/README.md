@@ -23,6 +23,7 @@
   - [`draggableUnZoomed?: boolean`](#draggableunzoomed-boolean)
   - [`doubleTapZoomOutOnMaxScale?: boolean`](#doubletapzoomoutonmaxscale-boolean-1)
   - [`lockDragAxis?: boolean`](#lockdragaxis-boolean)
+  - [`nonce?: string`](#nonce-string)
   - [`setOffsetsOnce?: boolean`](#setoffsetsonce-boolean)
   - [`verticalPadding?: number`](#verticalpadding-number)
   - [`horizontalPadding?: number`](#horizontalpadding-number)
@@ -64,6 +65,7 @@ import QuickPinchZoom from "react-quick-pinch-zoom";
   doubleTapZoomOutOnMaxScale={false}
   doubleTapToggleZoom={false}
   lockDragAxis={false}
+  nonce={undefined}
   setOffsetsOnce={false}
   verticalPadding={0}
   horizontalPadding={0}
@@ -212,6 +214,12 @@ Using `false` allows other libs to pick up drag events
 Lock panning of the element to a single axis.
 
 (default `false`)
+
+## `nonce?: string`
+
+Optional CSP nonce for injecting required CSS into the document.
+
+(default `undefined`)
 
 ## `setOffsetsOnce?: boolean`
 
